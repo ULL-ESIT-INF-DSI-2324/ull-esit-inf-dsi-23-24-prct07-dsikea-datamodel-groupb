@@ -98,5 +98,5 @@ Se han realizado los siguientes resúmenes:
 >      uses: coverallsapp/github-action@v2.2.3
 >      with:
 >        github-token: ${{ secrets.GITHUB_TOKEN }}
+> ```
 > 
-
