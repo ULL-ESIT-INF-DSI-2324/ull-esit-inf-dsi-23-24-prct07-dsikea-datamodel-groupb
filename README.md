@@ -100,3 +100,12 @@ Se han realizado los siguientes resúmenes:
 >        github-token: ${{ secrets.GITHUB_TOKEN }}
 > ```
 > 
+> # Integración de SonarCloud en GitHub action
+> 8. Inicio de sesión en la web de [SonarCloud](https://sonarcloud.io)
+> 9. Se añade el repositorio en cuestión.
+> 10. Nos dirigimos a la pestaña de `Administration > Analysis Method` y desactivamos el análisis automático.
+> 11. En esa misma pestaña, en el apartado `with Github Actions` hacemos click y copiamos el token.
+> 12. En Github en la configuración del repositorio, concretamente en el apartado `Secrets and variables`, añadimos un nuevo secreto con la información obtenida.
+> 13. En la misma página que estábamos seleccionamos la opción de JS en el siguiente paso y copiamos el contenido que se proporciona para la action.
+> 
+>
