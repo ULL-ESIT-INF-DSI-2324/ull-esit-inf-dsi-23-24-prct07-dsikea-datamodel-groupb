@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist index.js\"",
     "test": "mocha",
