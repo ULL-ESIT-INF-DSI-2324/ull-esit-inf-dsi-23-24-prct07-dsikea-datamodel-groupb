@@ -1,0 +1,144 @@
+{
+  "muebles": [
+    {
+      "id": 1,
+      "nombre": "Silla de madera",
+      "descripcion": "Silla de madera con respaldo y reposabrazos",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 40,
+        "largo": 40
+      },
+      "precio": 50,
+      "respaldo": true,
+      "reposabrazos": true
+    },
+    {
+      "id": 2,
+      "nombre": "Silla de comedor",
+      "descripcion": "Silla de comedor",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 75,
+        "ancho": 120,
+        "largo": 80
+      },
+      "precio": 120,
+      "respaldo": false,
+      "reposabrazos": false
+    },
+    {
+      "id": 3,
+      "nombre": "Silla de Metal",
+      "descripcion": "Silla de Metal con respaldo y reposabrazos",
+      "material": "Metal",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 200,
+        "largo": 80
+      },
+      "precio": 200,
+      "respaldo": true,
+      "reposabrazos": true
+    },
+    {
+      "id": 4,
+      "nombre": "Silla de aluminio",
+      "descripcion": "Silla de aluminio circular",
+      "material": "Aluminio",
+      "dimensiones": {
+        "alto": 40,
+        "ancho": 100,
+        "largo": 60
+      },
+      "precio": 80,
+      "respaldo": false,
+      "reposabrazos": false
+    },
+    {
+      "id": 5,
+      "nombre": "Silla de plástico",
+      "descripcion": "Silla de plástico con respaldo",
+      "material": "Plástico",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 40,
+        "largo": 40
+      },
+      "precio": 30,
+      "respaldo": true,
+      "reposabrazos": false
+    },
+    {
+      "id": 6,
+      "nombre": "Silla de escritorio",
+      "descripcion": "Silla de escritorio para estudiar",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 75,
+        "ancho": 120,
+        "largo": 60
+      },
+      "precio": 100,
+      "respaldo": false,
+      "reposabrazos": false
+    },
+    {
+      "id": 7,
+      "nombre": "Silla infantil",
+      "descripcion": "Silla para niños menores de 4 años",
+      "material": "Plástico",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 150,
+        "largo": 80
+      },
+      "precio": 150,
+      "respaldo": true,
+      "reposabrazos": true
+    },
+    {
+      "id": 8,
+      "nombre": "Silla para tv",
+      "descripcion": "Silla para ver la televisión",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 40,
+        "ancho": 100,
+        "largo": 40
+      },
+      "precio": 60,
+      "respaldo": false,
+      "reposabrazos": false
+    },
+    {
+      "id": 9,
+      "nombre": "Silla de metal",
+      "descripcion": "Silla de metal con respaldo",
+      "material": "Metal",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 40,
+        "largo": 40
+      },
+      "precio": 40,
+      "respaldo": true,
+      "reposabrazos": false
+    },
+    {
+      "id": 10,
+      "nombre": "Silla de jardín",
+      "descripcion": "Silla para decorar la terraza",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 75,
+        "ancho": 120,
+        "largo": 80
+      },
+      "precio": 150,
+      "respaldo": false,
+      "reposabrazos": false
+    }
+  ]
+}

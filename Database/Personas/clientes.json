@@ -1,0 +1,64 @@
+{
+  "clientes": [
+    {
+      "id": 1,
+      "nombre": "Juan Perez",
+      "contacto": 123456789,
+      "direccion": "Calle Principal 123"
+    },
+    {
+      "id": 2,
+      "nombre": "María López",
+      "contacto": 987654321,
+      "direccion": "Avenida Central 456"
+    },
+    {
+      "id": 3,
+      "nombre": "Pedro Gómez",
+      "contacto": 456789123,
+      "direccion": "Boulevard Norte 789"
+    },
+    {
+      "id": 4,
+      "nombre": "Ana Martínez",
+      "contacto": 321654987,
+      "direccion": "Calle Sur 159"
+    },
+    {
+      "id": 5,
+      "nombre": "Carlos Rodríguez",
+      "contacto": 654987321,
+      "direccion": "Avenida Oeste 753"
+    },
+    {
+      "id": 6,
+      "nombre": "Sofía Hernández",
+      "contacto": 789123456,
+      "direccion": "Boulevard Este 951"
+    },
+    {
+      "id": 7,
+      "nombre": "Javier Sánchez",
+      "contacto": 147258369,
+      "direccion": "Calle Este 753"
+    },
+    {
+      "id": 8,
+      "nombre": "Luisa Torres",
+      "contacto": 369258147,
+      "direccion": "Avenida Oeste 951"
+    },
+    {
+      "id": 9,
+      "nombre": "Jorge Ramírez",
+      "contacto": 258369147,
+      "direccion": "Boulevard Norte 753"
+    },
+    {
+      "id": 10,
+      "nombre": "Marta Díaz",
+      "contacto": 258369147,
+      "direccion": "Calle Principal 753"
+    }
+  ]
+}

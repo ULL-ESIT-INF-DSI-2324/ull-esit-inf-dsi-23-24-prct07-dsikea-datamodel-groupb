@@ -1,0 +1,64 @@
+{
+  "proveedores" : [
+    {
+      "id": 1,
+      "nombre": "Muebles Rústicos S.A.",
+      "contacto": 555555555,
+      "direccion": "Calle de los Muebles 789"
+    },
+    {
+      "id": 2,
+      "nombre": "Maderas del Sur",
+      "contacto": 666666666,
+      "direccion": "Carretera de la Madera 321"
+    },
+    {
+      "id": 3,
+      "nombre": "Muebles del Ártico",
+      "contacto": 777777777,
+      "direccion": "Calle de los Muebles 123"
+    },
+    {
+      "id": 4,
+      "nombre": "Muebles S.A",
+      "contacto": 888888888,
+      "direccion": "Calle de las Rosas 123"
+    },
+    {
+      "id": 5,
+      "nombre": "Muebles Canarias",
+      "contacto": 999999999,
+      "direccion": "Calle de Canarias 123"
+    },
+    {
+      "id": 6,
+      "nombre": "Muebles Paco",
+      "contacto": 101010101,
+      "direccion": "Calle de Paco 123"
+    },
+    {
+      "id": 7,
+      "nombre": "BatMuebles",
+      "contacto": 111111111,
+      "direccion": "Calle de Batman"
+    },
+    {
+      "id": 8,
+      "nombre": "Muebles de Barbie",
+      "contacto": 121212121,
+      "direccion": "FairyTopia"
+    },
+    {
+      "id": 9,
+      "nombre": "Muebles de Lallys",
+      "contacto": 131313131,
+      "direccion": "Santa Cruz de Tenerife"
+    },
+    {
+      "id": 10,
+      "nombre": "Muebles Distribution",
+      "contacto": 141414141,
+      "direccion": "La Laguna"
+    }
+  ]
+}

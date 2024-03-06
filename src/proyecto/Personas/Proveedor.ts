@@ -19,6 +19,6 @@ export class Proveedor extends Persona {
   }
 
   // Getters & Setters
-
+  
   
 }

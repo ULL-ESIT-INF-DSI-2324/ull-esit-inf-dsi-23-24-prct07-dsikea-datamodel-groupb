@@ -4,7 +4,7 @@ import { Persona } from '../src/proyecto/Personas/Persona.js';
 import { Cliente } from '../src/proyecto/Personas/Cliente.js';
 import { Proveedor } from '../src/proyecto/Personas/Proveedor.js';
 
-
+console.log('🦉 ¡Tests Cliente y Proveedor Lanzados! 🦉');
 
 describe('Tests de la clase Cliente (extiende Persona)', () => {
   let cliente : Cliente;
@@ -63,5 +63,9 @@ describe('Tests de la clase Proveedor (extiende Persona)', () => {
     expect(proveedor.nombre).to.be.equal("Antonio2");
     expect(proveedor.contacto).to.be.equal(987654321);
     expect(proveedor.direccion).to.be.equal("Calle Falsa 321");
+  })
+
+  it ('Se comprueba que el contacto debe tener 9 dígitos', () => {
+    expect(() => new Proveedor(1, "Antonio", "12345678", "Calle Falsa 123")).to.throw('El contacto debe tener 9 dígitos');
   })
 });

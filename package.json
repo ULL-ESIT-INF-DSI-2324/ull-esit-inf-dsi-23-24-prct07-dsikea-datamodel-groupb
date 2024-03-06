@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.12",
+    "@types/inquirer": "^9.0.7",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.24",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
@@ -23,11 +24,16 @@
     "chai": "^5.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "inquirer": "^1.0.0",
+    "lowdb": "^7.0.1",
     "mocha": "^10.3.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
     "typedoc": "^0.25.11",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/lowdb": "^1.0.15"
   }
 }
