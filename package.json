@@ -6,27 +6,28 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type":"module",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist index.js\"",
     "test": "mocha",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov",
+    "coverage": "c8 npm test && c8 report --reporter=lcov",
     "doc": "typedoc"
   },
   "devDependencies": {
     "@types/chai": "^4.3.12",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.11.20",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "chai": "^4.4.1",
-    "eslint": "^8.56.0",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "c8": "^9.1.0",
+    "chai": "^5.1.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "mocha": "^10.3.0",
-    "nyc": "^15.1.0",
     "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4",
-    "typedoc": "^0.25.8",
+    "typedoc": "^0.25.11",
     "typescript": "^5.3.3"
   }
 }

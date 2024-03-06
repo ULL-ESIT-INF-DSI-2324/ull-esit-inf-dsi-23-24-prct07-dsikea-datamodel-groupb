@@ -39,7 +39,7 @@ Se han realizado los siguientes resúmenes:
 > on:
 >   push:
 >      branches: [ main ]
->   pull:
+>   pull_request:
 >      branches: [ main ]
 > 
 > jobs:
