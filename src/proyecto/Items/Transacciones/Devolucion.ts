@@ -8,15 +8,14 @@
  *  > Omar Suárez Doro (alu0101483474@ull.edu.es)
  */
 
-import { Mueble } from '../Muebles/Mueble.js';
+
 import { Transaccion } from './Transaccion.js';
-import { Persona } from '../Personas/Persona.js';
 
 /**
  * Clase que representa una Devolucion
  */
 export class Devolucion extends Transaccion {
-  constructor(fecha: Date, importe: number, mueble: Mueble, persona: Persona) {
-    super(fecha, importe, mueble, persona);
+  constructor(fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
+    super(fecha, importe, id_mueble, dni_persona);
   }
 }

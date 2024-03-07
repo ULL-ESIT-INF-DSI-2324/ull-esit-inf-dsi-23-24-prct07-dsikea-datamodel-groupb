@@ -15,8 +15,18 @@ import { JSONFileSyncPreset } from 'lowdb/node';
 // import { Proveedor } from '../Personas/Proveedor.js'
 
 class BaseDeDatos {
+  private muebles_: Map<string, Mueble[]> = new Map<string, Mueble[]>();
   constructor() {
-    
+    type DataFormat = {
+      muebles: Mueble[];
+    }
+    let defaultData: DataFormat = { muebles: [] };
+    const db = JSONFileSyncPreset<DataFormat>('./Database/Muebles/sillas.json', defaultData);
+    let data : Mueble[] = db.data.muebles;
+    data.forEach((mueble : Mueble) => {
+      this.muebles_.get(mueble.nombre)?.push(mueble) || this.muebles_.set(mueble.nombre, [mueble]);
+    });
+    // console.log(this.muebles_);
   }
   buscarMueble(
     searchObj: {
@@ -25,40 +35,24 @@ class BaseDeDatos {
       descripcion?: string,
       ordenAsc?: boolean,
     }): Mueble[] {
-    let result: Mueble[] = [];
-    type DataFormat = {
-      muebles: Mueble[];
+    let auxVec : Mueble[] = [];
+    for (const m of this.muebles_.values()) {
+      auxVec.push(...(m.filter((mueble) => {
+        return searchObj.nombre && mueble.nombre.includes(searchObj.nombre) || 
+        searchObj.descripcion && mueble.descripcion.includes(searchObj.descripcion);
+      })));
     }
-    let defaultData: DataFormat = { muebles: [] };
-    
-    const db = JSONFileSyncPreset<DataFormat>('./Database/Muebles/sillas.json', defaultData);
-    let data : Mueble[] = db.data.muebles;
-
-    result = data.filter((mueble) => {
-      if (searchObj.nombre && mueble.nombre.includes(searchObj.nombre)) {
-        return true;
+    auxVec.sort((a, b) => {
+      if (a.precio < b.precio) {
+        return 1;
       }
-      if (searchObj.tipo) {
-        // if (mueble.tipo.includes(searchObj.tipo)) {
-        //   return true;
-        // }
+      if (a.precio > b.precio) {
+        return -1;
       }
-      if (searchObj.descripcion) {
-        if (mueble.descripcion.includes(searchObj.descripcion)) {
-          return true;
-        }
-      }
-      return false;
+      return 0;
     });
-    if (searchObj.ordenAsc) {
-      result.sort((a, b) => {
-        return a.precio - b.precio;
-      });
-    }
-    return result;
+    return searchObj.ordenAsc ? auxVec : auxVec.reverse();
   }
-
 }
-
 let bb = new BaseDeDatos();
 console.log(bb.buscarMueble({nombre: 'Silla de Metal'}));

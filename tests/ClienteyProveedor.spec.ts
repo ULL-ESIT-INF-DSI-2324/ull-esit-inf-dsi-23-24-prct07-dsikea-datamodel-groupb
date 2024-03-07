@@ -1,8 +1,8 @@
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import { Persona } from '../src/proyecto/Personas/Persona.js';
-import { Cliente } from '../src/proyecto/Personas/Cliente.js';
-import { Proveedor } from '../src/proyecto/Personas/Proveedor.js';
+import { Persona } from '../src/proyecto/Items/Personas/Persona.js';
+import { Cliente } from '../src/proyecto/Items/Personas/Cliente.js';
+import { Proveedor } from '../src/proyecto/Items/Personas/Proveedor.js';
 
 console.log('🦉 ¡Tests Cliente y Proveedor Lanzados! 🦉');
 

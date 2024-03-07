@@ -9,23 +9,20 @@
  */
 
 
-import { Mueble } from '../Muebles/Mueble.js';
-import { Persona } from '../Personas/Persona.js';
-
 /**
  * Clase abstracta que representa una Transaccion
  */
 export abstract class Transaccion {
   protected fecha_: Date;
   protected importe_: number;
-  protected mueble_ : Mueble;
-  protected persona_ : Persona;
+  protected mueble_ : number;
+  protected persona_ : string;
  
-  constructor(fecha: Date, importe: number, mueble: Mueble, persona: Persona) {
+  constructor(fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
     this.fecha_ = fecha;
     this.importe_ = importe;
-    this.mueble_ = mueble;
-    this.persona_ = persona;
+    this.mueble_ = id_mueble;
+    this.persona_ = dni_persona;
   }
 
   /**
@@ -45,18 +42,18 @@ export abstract class Transaccion {
   }
   
   /**
-   * Devuelve el mueble de la transacción
+   * Devuelve el  nombre del mueble de la transacción
    * @returns Mueble de la transacción
    */
-  public get mueble(): Mueble {
+  public get mueble(): number {
     return this.mueble_;
   }
   
   /**
-   * Devuelve la persona de la transacción
+   * Devuelve el dni de la persona de la transacción
    * @returns Persona de la transacción
    */
-  public get persona(): Persona {
+  public get persona(): string {
     return this.persona_;
   }
 
@@ -77,18 +74,18 @@ export abstract class Transaccion {
   }
 
   /**
-   * Establece el mueble de la transacción
+   * Establece el id del mueble de la transacción
    * @param mueble Mueble de la transacción
    */
-  public set mueble(mueble: Mueble) {
+  public set mueble(mueble: number) {
     this.mueble_ = mueble;
   }
 
   /**
-   * Establece la persona de la transacción
+   * Establece el dni de la persona de la transacción
    * @param persona Persona de la transacción
    */
-  public set persona(persona: Persona) {
+  public set persona(persona: string) {
     this.persona_ = persona;
   }
 }

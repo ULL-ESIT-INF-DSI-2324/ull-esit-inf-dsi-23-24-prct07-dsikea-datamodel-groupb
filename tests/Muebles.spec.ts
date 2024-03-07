@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 import { expect } from "chai";
-import { Mueble } from '../src/proyecto/Muebles/Mueble.js';
-import { Silla } from '../src/proyecto/Muebles/Silla.js';
+import { Mueble } from '../src/proyecto/Items/Muebles/Mueble.js';
+import { Silla } from '../src/proyecto/Items/Muebles/Silla.js';
 
 
 

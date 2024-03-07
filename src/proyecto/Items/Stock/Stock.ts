@@ -13,7 +13,7 @@ import { Mueble } from "../Muebles/Mueble.js";
 /**
  * Clase Stock
  */
-class Stock {
+export class Stock {
   private items: Map<Mueble, number>;
   private static stock: Stock;
   

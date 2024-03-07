@@ -312,6 +312,7 @@ async function main() {
     message: "¿Sobre qué quiere realizar una operación?",
     choices: ["Muebles", "Clientes", "Proveedores", "Stock", "Volver"],
   });
+  console.log("acabo de pasar por aquí");
   switch (answer.option) {
     case "Muebles":
       menuMuebles();
