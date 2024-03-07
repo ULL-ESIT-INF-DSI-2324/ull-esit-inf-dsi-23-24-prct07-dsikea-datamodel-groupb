@@ -13,9 +13,9 @@ import { Transaccion } from './Transaccion.js';
 import { Persona } from '../Personas/Persona.js';
 
 /**
- * Clase que representa una Venta
+ * Clase que representa una Devolucion
  */
-export class Venta extends Transaccion {
+export class Devolucion extends Transaccion {
   constructor(fecha: Date, importe: number, mueble: Mueble, persona: Persona) {
     super(fecha, importe, mueble, persona);
   }
