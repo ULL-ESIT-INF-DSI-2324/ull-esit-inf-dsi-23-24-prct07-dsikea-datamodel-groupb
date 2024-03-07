@@ -8,6 +8,9 @@
  *  > Omar Suárez Doro (alu0101483474@ull.edu.es)
  */
 
-export interface Strategy {
-  execute(db: unknown) : void;
+/**
+ * Interfaz que representa una estrategia de ordenación
+ */
+export interface sortStrategy<T> {
+  sort() : (a: T, b : T) => number;
 }

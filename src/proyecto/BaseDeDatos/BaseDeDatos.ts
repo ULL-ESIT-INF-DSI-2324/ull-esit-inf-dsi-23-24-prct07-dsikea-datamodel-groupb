@@ -10,11 +10,15 @@
 
 import { Mueble } from '../Items/Muebles/Mueble.js'
 import { JSONFileSyncPreset } from 'lowdb/node';
+import { sortStrategy } from '../Interfaces/Interfaces.js';  
+// import { OrdenarPorPrecio } from './OrdenarPorPrecio.js';  
+// import { OrdenarAlfabeticamente } from './OrdenarAlfabeticamente.js';
+
 // import { Silla } from '../Items/Muebles/Silla.js'
 // import { Cliente } from '../Personas/Cliente.js'
 // import { Proveedor } from '../Personas/Proveedor.js'
 
-class BaseDeDatos {
+export class BaseDeDatos {
   private muebles_: Map<string, Mueble[]> = new Map<string, Mueble[]>();
   constructor() {
     type DataFormat = {
@@ -33,26 +37,18 @@ class BaseDeDatos {
       nombre?: string,
       tipo?: string,
       descripcion?: string,
-      ordenAsc?: boolean,
-    }): Mueble[] {
+      ordenDesc?: boolean,
+    }, s_strat : sortStrategy<Mueble>): Mueble[] {
     let auxVec : Mueble[] = [];
     for (const m of this.muebles_.values()) {
       auxVec.push(...(m.filter((mueble) => {
-        return searchObj.nombre && mueble.nombre.includes(searchObj.nombre) || 
-        searchObj.descripcion && mueble.descripcion.includes(searchObj.descripcion);
+        if (!searchObj.nombre && !searchObj.descripcion && !searchObj.tipo) return true;
+        return searchObj.nombre && mueble.nombre.includes(searchObj.nombre) ||
+        searchObj.descripcion && mueble.descripcion.includes(searchObj.descripcion) ||
+        searchObj.tipo && mueble.tipo === searchObj.tipo;
       })));
     }
-    auxVec.sort((a, b) => {
-      if (a.precio < b.precio) {
-        return 1;
-      }
-      if (a.precio > b.precio) {
-        return -1;
-      }
-      return 0;
-    });
-    return searchObj.ordenAsc ? auxVec : auxVec.reverse();
+    auxVec.sort(s_strat.sort());
+    return searchObj.ordenDesc ? auxVec : auxVec.reverse();
   }
 }
-let bb = new BaseDeDatos();
-console.log(bb.buscarMueble({nombre: 'Silla de Metal'}));

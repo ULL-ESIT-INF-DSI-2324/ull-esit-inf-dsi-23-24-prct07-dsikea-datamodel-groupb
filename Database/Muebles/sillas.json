@@ -3,6 +3,7 @@
     {
       "id": 1,
       "nombre": "Silla de madera",
+      "tipo": "silla",
       "descripcion": "Silla de madera con respaldo y reposabrazos",
       "material": "Madera",
       "dimensiones": {

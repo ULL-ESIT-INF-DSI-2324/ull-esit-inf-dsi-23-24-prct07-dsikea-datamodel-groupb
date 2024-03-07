@@ -23,6 +23,7 @@ describe('Tests de la clase Silla (extiende mueble)', () => {
     expect(miSilla1.reposabrazos).to.be.equal(false);
     expect(miSilla2.respaldo).to.be.equal(true);
     expect(miSilla2.reposabrazos).to.be.equal(true);
+    expect(miSilla1.tipo).to.be.equal("Silla");
   })
 
   it('Se comprueba que los setters establecen los valores correctos', () => {
@@ -30,10 +31,12 @@ describe('Tests de la clase Silla (extiende mueble)', () => {
     miSilla1.reposabrazos = true;
     miSilla2.respaldo = false;
     miSilla2.reposabrazos = false;
+    miSilla1.tipo = "No definido";
     expect(miSilla1.respaldo).to.be.equal(true);
     expect(miSilla1.reposabrazos).to.be.equal(true);
     expect(miSilla2.respaldo).to.be.equal(false);
     expect(miSilla2.reposabrazos).to.be.equal(false);
+    expect(miSilla1.tipo).to.be.equal("No definido");
   })
 
   it('Se comprueba que los getters de la clase abstracta mueble devuelven los valores correctos', () => {
@@ -43,6 +46,7 @@ describe('Tests de la clase Silla (extiende mueble)', () => {
     expect(miSilla1.material).to.be.equal("Madera");
     expect(miSilla1.dimensiones).to.be.eql({alto: 100, ancho: 50, largo: 50});
     expect(miSilla1.precio).to.be.equal(50);
+    expect(miSilla1.tipo).to.be.equal("Silla");
   });
 
   it('Se comprueba que los setters de la clase abstracta mueble establecen los valores correctos', () => {
@@ -52,11 +56,13 @@ describe('Tests de la clase Silla (extiende mueble)', () => {
     miSilla1.material = "Madera2";
     miSilla1.dimensiones = {alto: 200, ancho: 100, largo: 100};
     miSilla1.precio = 100;
+    miSilla1.tipo = "Silla"
     expect(miSilla1.id).to.be.equal(2);
     expect(miSilla1.nombre).to.be.equal("Silla2");
     expect(miSilla1.descripcion).to.be.equal("Silla de madera2");
     expect(miSilla1.material).to.be.equal("Madera2");
     expect(miSilla1.dimensiones).to.be.eql({alto: 200, ancho: 100, largo: 100});
     expect(miSilla1.precio).to.be.equal(100);
+    expect(miSilla1.tipo).to.be.equal("Silla");
   });
 });

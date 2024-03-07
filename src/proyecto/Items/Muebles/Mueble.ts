@@ -27,6 +27,7 @@ export abstract class Mueble {
   protected material_: string;
   protected dimensiones_: Dimension;
   protected precio_: number;
+  protected tipo_ : string = 'No definido';
   
   constructor(id: number, nombre: string, descripcion: string, material: string, dimensiones: Dimension, precio: number) {
     this.id_ = id;
@@ -82,15 +83,23 @@ export abstract class Mueble {
   /**
    * Devuelve el precio del mueble
    * @returns Precio del mueble
-   */
-  public get precio(): number {
-    return this.precio_;
+  */
+ public get precio(): number {
+   return this.precio_;
   }
-
+  
+  /**
+   * Devuelve el tipo de mueble
+   * @returns Tipo de mueble
+   */
+  public get tipo(): string {
+    return this.tipo_;
+  }
+  
   /**
    * Establece el identificador del mueble
    * @param id Identificador del mueble
-   */
+  */
   public set id(id: number) {
     this.id_ = id;
   }
@@ -133,6 +142,15 @@ export abstract class Mueble {
    */
   public set precio(precio: number) {
     this.precio_ = precio;
+  }
+
+
+  /**
+   * Establece el tipo de mueble
+   * @param tipo Tipo de mueble
+   */
+  public set tipo(tipo: string) {
+    this.tipo_ = tipo;
   }
 
 }

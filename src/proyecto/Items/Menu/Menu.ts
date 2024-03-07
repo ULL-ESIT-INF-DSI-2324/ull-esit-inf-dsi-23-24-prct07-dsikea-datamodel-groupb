@@ -9,7 +9,16 @@
  */
 
 import inquirer from 'inquirer';
+import * as ReadlineSync from 'readline-sync';
+import { sortStrategy } from '../../Interfaces/Interfaces.js';
+import { BaseDeDatos } from '../../BaseDeDatos/BaseDeDatos.js';
+import { Mueble } from '../Muebles/Mueble.js';
+import { OrdenarAlfabeticamente } from '../../BaseDeDatos/OrdenarAlfabeticamente.js';
+import { OrdenarPorPrecio } from '../../BaseDeDatos/OrdenarPorPrecio.js';
+import { OrdenarPorId } from '../../BaseDeDatos/OrdenarPorId.js';
 
+const bbdd = new BaseDeDatos();
+ 
 /**
  * Función que muestra el menú de generación de informes.
  */
@@ -108,16 +117,19 @@ async function menuBusquedaMuebles() {
   });
   switch (answer.option) {
     case "Por nombre":
-      console.log("Buscando...");
       // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
+      const nombre : string = ReadlineSync.question("Introduzca el nombre del mueble: ");
+      const opcion : estrategiaOrdenacion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 "));
+      const descendente : boolean = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
+      console.log(bbdd.buscarMueble({nombre: nombre, ordenDesc : descendente}, returnStrat(opcion)));
       break;
     case "Por tipo":
-      console.log("Buscando...");
       // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
+      console.log("Buscando...");
       break;
     case "Por descripción":
-      console.log("Buscando...");
       // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
+      console.log("Buscando...");
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -182,7 +194,6 @@ async function menuMuebles() {
       console.log("Editando mueble...");
       break;
     case "Buscar Mueble":
-      console.log("Buscando mueble...");
       menuBusquedaMuebles();
       break;
     case "Volver":
@@ -302,6 +313,7 @@ async function menuStock() {
   }
 }
 
+
 /**
  * Función que muestra el menú de gestión de transacciones.
  */
@@ -334,7 +346,30 @@ async function main() {
   }
 }
 
+function returnStrat(p : estrategiaOrdenacion) : sortStrategy<Mueble> {
+  let strat : sortStrategy<Mueble>;
+  switch (p) {
+    case estrategiaOrdenacion.ALFABETICAMENTE:
+      strat = new OrdenarAlfabeticamente();
+      break;
+    case estrategiaOrdenacion.PRECIO:
+      strat = new OrdenarPorPrecio();
+      break;
+    case estrategiaOrdenacion.ID:
+      strat = new OrdenarPorId();
+      break;
+    default:
+      strat = new OrdenarAlfabeticamente();
+      break;
+  }  
+  return strat;
+}
 
+enum estrategiaOrdenacion {
+  ALFABETICAMENTE,
+  PRECIO,
+  ID
+}
 /**
  * Llamada a la función principal que muestra el menú principal.
  */
