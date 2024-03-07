@@ -18,7 +18,6 @@ class BaseDeDatos {
   constructor() {
     
   }
-
   buscarMueble(
     searchObj: {
       nombre?: string,
@@ -59,11 +58,6 @@ class BaseDeDatos {
     return result;
   }
 
-  // private inicializarBaseDeDatos() : void {
-  //   JSONFilePreset<Silla[]>('./Database/Muebles/sillas.json', []).then((adapter) => {
-  //     this.muebles_ = [...adapter.data];
-  //   });
-  // }
 }
 
 let bb = new BaseDeDatos();
