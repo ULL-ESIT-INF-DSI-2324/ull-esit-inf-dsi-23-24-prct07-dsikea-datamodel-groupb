@@ -114,7 +114,7 @@
     },
     {
       "id": 9,
-      "nombre": "Silla de metal",
+      "nombre": "Silla de Metal",
       "descripcion": "Silla de metal con respaldo",
       "material": "Metal",
       "dimensiones": {

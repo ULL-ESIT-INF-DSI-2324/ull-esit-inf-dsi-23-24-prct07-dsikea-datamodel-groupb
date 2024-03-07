@@ -27,6 +27,7 @@ export abstract class Mueble {
   protected material_: string;
   protected dimensiones_: Dimension;
   protected precio_: number;
+  
   constructor(id: number, nombre: string, descripcion: string, material: string, dimensiones: Dimension, precio: number) {
     this.id_ = id;
     this.nombre_ = nombre;

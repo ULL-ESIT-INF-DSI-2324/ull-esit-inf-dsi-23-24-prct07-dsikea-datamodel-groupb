@@ -8,31 +8,63 @@
  *  > Omar Suárez Doro (alu0101483474@ull.edu.es)
  */
 
-import { JSONFilePreset } from 'lowdb/node'
-import { Silla } from '../Muebles/Silla.js'
-import { Mueble } from '../Muebles/Mueble.js'
+import { Mueble } from '../Items/Muebles/Mueble.js'
+import { JSONFileSyncPreset } from 'lowdb/node';
+// import { Silla } from '../Items/Muebles/Silla.js'
 // import { Cliente } from '../Personas/Cliente.js'
 // import { Proveedor } from '../Personas/Proveedor.js'
 
 class BaseDeDatos {
-  private muebles_: Mueble[] = [];
-
   constructor() {
-    this.inicializarBaseDeDatos();
-  }
-  
-  get muebles() : Mueble[] {
-    return this.muebles_;
+    
   }
 
-  private inicializarBaseDeDatos() : void {
-    JSONFilePreset<Silla[]>('./Database/Muebles/sillas.json', []).then((adapter) => {
-      this.muebles_ = [...adapter.data];
+  buscarMueble(
+    searchObj: {
+      nombre?: string,
+      tipo?: string,
+      descripcion?: string,
+      ordenAsc?: boolean,
+    }): Mueble[] {
+    let result: Mueble[] = [];
+    type DataFormat = {
+      muebles: Mueble[];
+    }
+    let defaultData: DataFormat = { muebles: [] };
+    
+    const db = JSONFileSyncPreset<DataFormat>('./Database/Muebles/sillas.json', defaultData);
+    let data : Mueble[] = db.data.muebles;
+
+    result = data.filter((mueble) => {
+      if (searchObj.nombre && mueble.nombre.includes(searchObj.nombre)) {
+        return true;
+      }
+      if (searchObj.tipo) {
+        // if (mueble.tipo.includes(searchObj.tipo)) {
+        //   return true;
+        // }
+      }
+      if (searchObj.descripcion) {
+        if (mueble.descripcion.includes(searchObj.descripcion)) {
+          return true;
+        }
+      }
+      return false;
     });
+    if (searchObj.ordenAsc) {
+      result.sort((a, b) => {
+        return a.precio - b.precio;
+      });
+    }
+    return result;
   }
+
+  // private inicializarBaseDeDatos() : void {
+  //   JSONFilePreset<Silla[]>('./Database/Muebles/sillas.json', []).then((adapter) => {
+  //     this.muebles_ = [...adapter.data];
+  //   });
+  // }
 }
 
 let bb = new BaseDeDatos();
-setTimeout(() => {
-  console.log(bb.muebles);
-},10);
+console.log(bb.buscarMueble({nombre: 'Silla de Metal'}));
