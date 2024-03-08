@@ -63,6 +63,6 @@ describe('Tests de la clase Silla (extiende mueble)', () => {
     expect(miSilla1.material).to.be.equal("Madera2");
     expect(miSilla1.dimensiones).to.be.eql({alto: 200, ancho: 100, largo: 100});
     expect(miSilla1.precio).to.be.equal(100);
-    expect(miSilla1.tipo).to.be.equal("Silla");
+    expect(miSilla1.tipo).to.be.equal("S")
   });
 });

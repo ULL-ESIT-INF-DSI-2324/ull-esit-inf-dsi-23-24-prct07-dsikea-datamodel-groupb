@@ -129,16 +129,16 @@
     },
     {
       "id": 10,
-      "nombre": "Silla de jardín",
-      "descripcion": "Silla para decorar la terraza",
+      "nombre": "Silla de madera",
+      "descripcion": "Silla de madera con respaldo",
       "material": "Madera",
       "dimensiones": {
-        "alto": 75,
-        "ancho": 120,
-        "largo": 80
+        "alto": 80,
+        "ancho": 40,
+        "largo": 40
       },
-      "precio": 150,
-      "respaldo": false,
+      "precio": 70,
+      "respaldo": true,
       "reposabrazos": false
     }
   ]

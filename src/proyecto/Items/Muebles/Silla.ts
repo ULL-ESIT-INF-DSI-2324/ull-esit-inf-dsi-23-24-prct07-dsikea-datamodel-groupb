@@ -20,7 +20,6 @@ export class Silla extends Mueble {
     super(id, nombre, descripcion, material, dimensiones, precio);
     this.respaldo_ = respaldo;
     this.reposabrazos_ = reposabrazos;
-    this.tipo_ = 'Silla';
   }
 
   // Getters & Setters
@@ -56,5 +55,4 @@ export class Silla extends Mueble {
   public set reposabrazos(reposabrazos: boolean) {
     this.reposabrazos_ = reposabrazos;
   }
-
 }

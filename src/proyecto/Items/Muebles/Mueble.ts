@@ -28,6 +28,8 @@ export abstract class Mueble {
   protected dimensiones_: Dimension;
   protected precio_: number;
   protected tipo_ : string = 'No definido';
+  // Signature para indexar propiedades
+  [key: string]: unknown;
   
   constructor(id: number, nombre: string, descripcion: string, material: string, dimensiones: Dimension, precio: number) {
     this.id_ = id;
@@ -49,8 +51,8 @@ export abstract class Mueble {
   }
 
   /**
-   * Devuelve la descripción del mueble
-   * @returns Descripción del mueble
+   * Devuelve el nombre del mueble
+   * @returns Nombre del mueble
    */
   public get nombre(): string {
     return this.nombre_;
