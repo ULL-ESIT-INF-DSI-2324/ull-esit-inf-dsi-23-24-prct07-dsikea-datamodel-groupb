@@ -1,9 +1,8 @@
 {
-  "muebles": [
+  "sillas": [
     {
-      "id": 1,
+      "id": 1001,
       "nombre": "Silla de madera",
-      "tipo": "silla",
       "descripcion": "Silla de madera con respaldo y reposabrazos",
       "material": "Madera",
       "dimensiones": {
@@ -16,7 +15,7 @@
       "reposabrazos": true
     },
     {
-      "id": 2,
+      "id": 1002,
       "nombre": "Silla de comedor",
       "descripcion": "Silla de comedor",
       "material": "Madera",
@@ -30,7 +29,7 @@
       "reposabrazos": false
     },
     {
-      "id": 3,
+      "id": 1003,
       "nombre": "Silla de Metal",
       "descripcion": "Silla de Metal con respaldo y reposabrazos",
       "material": "Metal",
@@ -44,7 +43,7 @@
       "reposabrazos": true
     },
     {
-      "id": 4,
+      "id": 1004,
       "nombre": "Silla de aluminio",
       "descripcion": "Silla de aluminio circular",
       "material": "Aluminio",
@@ -58,7 +57,7 @@
       "reposabrazos": false
     },
     {
-      "id": 5,
+      "id": 1005,
       "nombre": "Silla de plástico",
       "descripcion": "Silla de plástico con respaldo",
       "material": "Plástico",
@@ -72,7 +71,7 @@
       "reposabrazos": false
     },
     {
-      "id": 6,
+      "id": 1006,
       "nombre": "Silla de escritorio",
       "descripcion": "Silla de escritorio para estudiar",
       "material": "Madera",
@@ -86,7 +85,7 @@
       "reposabrazos": false
     },
     {
-      "id": 7,
+      "id": 1007,
       "nombre": "Silla infantil",
       "descripcion": "Silla para niños menores de 4 años",
       "material": "Plástico",
@@ -100,7 +99,7 @@
       "reposabrazos": true
     },
     {
-      "id": 8,
+      "id": 1008,
       "nombre": "Silla para tv",
       "descripcion": "Silla para ver la televisión",
       "material": "Madera",
@@ -114,7 +113,7 @@
       "reposabrazos": false
     },
     {
-      "id": 9,
+      "id": 1009,
       "nombre": "Silla de Metal",
       "descripcion": "Silla de metal con respaldo",
       "material": "Metal",
@@ -128,7 +127,7 @@
       "reposabrazos": false
     },
     {
-      "id": 10,
+      "id": 1010,
       "nombre": "Silla de madera",
       "descripcion": "Silla de madera con respaldo",
       "material": "Madera",
@@ -140,6 +139,92 @@
       "precio": 70,
       "respaldo": true,
       "reposabrazos": false
+    }
+  ],
+  "mesas": [
+    {
+      "id": 2001,
+      "nombre": "Mesa de madera",
+      "descripcion": "Mesa de madera con 4 sillas",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 120,
+        "largo": 120
+      },
+      "precio": 300,
+      "extensible": false,
+      "sillas": 4
+    },
+    {
+      "id": 2002,
+      "nombre": "Mesa de comedor",
+      "descripcion": "Mesa de comedor con 6 sillas",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 150,
+        "largo": 150
+      },
+      "precio": 500,
+      "extensible": true,
+      "sillas": 6
+    },
+    {
+      "id": 2003,
+      "nombre": "Mesa de Metal",
+      "descripcion": "Mesa de metal con 4 sillas",
+      "material": "Metal",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 120,
+        "largo": 120
+      },
+      "precio": 400,
+      "extensible": false,
+      "sillas": 4
+    },
+    {
+      "id": 2004,
+      "nombre": "Mesa de aluminio",
+      "descripcion": "Mesa de aluminio con 6 sillas",
+      "material": "Aluminio",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 150,
+        "largo": 150
+      },
+      "precio": 600,
+      "extensible": true,
+      "sillas": 6
+    },
+    {
+      "id": 2005,
+      "nombre": "Mesa de plástico",
+      "descripcion": "Mesa de plástico con 4 sillas",
+      "material": "Plástico",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 120,
+        "largo": 120
+      },
+      "precio": 200,
+      "extensible": false,
+      "sillas": 4
+    },
+    {
+      "id": 2006,
+      "nombre": "Mesa de escritorio",
+      "descripcion": "Mesa de escritorio con silla",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 120,
+        "largo": 120
+      },
+      "precio": 250,
+      "extensible": false,
+      "sillas": 1
     }
   ]
 }

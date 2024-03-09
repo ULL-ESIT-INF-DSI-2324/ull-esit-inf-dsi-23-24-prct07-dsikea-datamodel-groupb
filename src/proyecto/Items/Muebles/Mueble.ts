@@ -154,5 +154,4 @@ export abstract class Mueble {
   public set tipo(tipo: string) {
     this.tipo_ = tipo;
   }
-
 }
