@@ -16,7 +16,7 @@ import { Silla } from '../Items/Muebles/Silla.js'
 
 
 /**
- * Clase que implementa la base de datos
+ * Formato de los datos que se obtendran del JSON
  */
 export type DataFormat = {
   [key: string]: Mueble[];
@@ -25,12 +25,13 @@ export type DataFormat = {
 }
 
 /**
- * 
+ * Categoría de los muebles
  */
 export enum Categoria {
   SILLA = 'sillas',
   MESA = 'mesas',
 }
+
 /**
  * Clase que implementa la base de datos
  */
@@ -98,7 +99,7 @@ export class BaseDeDatos {
         objectToPush[prop.slice(0, prop.length - 1)] = mueble[prop];
       }
     }
-    this.insertarCategoria(categoria, mueble);
+    this.insertarMuebleCategoria(categoria, mueble);
     db.data[categoria].push(objectToPush as Mueble);
     console.log(this.muebles_);
     db.write();
@@ -127,7 +128,7 @@ export class BaseDeDatos {
    * @param categoria Esta función inserta un mueble en la categoría que le corresponde
    * @param mueble Este es el mueble que se va a insertar
    */
-  private insertarCategoria(categoria: string, mueble: Mueble): void {
+  private insertarMuebleCategoria(categoria: string, mueble: Mueble): void {
     if (!this.muebles_.get(categoria)!.has(mueble.nombre)) {
       this.muebles_.get(categoria)!.set(mueble.nombre, []);
     }
