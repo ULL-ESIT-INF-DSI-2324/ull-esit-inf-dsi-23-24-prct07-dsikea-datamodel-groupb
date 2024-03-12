@@ -13,15 +13,24 @@ import { JSONFileSyncPreset } from 'lowdb/node';
 import { sortStrategy } from '../Interfaces/Interfaces.js';
 import { LowSync } from 'lowdb';
 import { Silla } from '../Items/Muebles/Silla.js'
-
+import { Cliente } from '../Items/Personas/Cliente.js';
+import { Proveedor } from '../Items/Personas/Proveedor.js';
 
 /**
  * Formato de los datos que se obtendran del JSON
  */
-export type DataFormat = {
+export type FormatoMueble = {
   [key: string]: Mueble[];
   sillas: Mueble[];
   mesas: Mueble[];
+}
+
+export type FormatoCliente = {
+  clientes: Cliente[];
+}
+
+export type FormatoProveedor = {
+  proveedores: Proveedor[];
 }
 
 /**
@@ -37,26 +46,41 @@ export enum Categoria {
  */
 export class BaseDeDatos {
   private muebles_: Map<string, Map<string, Mueble[]>> = new Map<string, Map<string, Mueble[]>>();
-  private databases_: Map<string, LowSync<DataFormat>> = new Map<string, LowSync<DataFormat>>();
+  private clientes_: Cliente[] = [];
+  private proveedores_: Proveedor[] = [];
+  private db_muebles_: LowSync<FormatoMueble> = JSONFileSyncPreset<FormatoMueble>('./Database/muebles.json', { sillas: [], mesas: [] });
+  private db_clientes_: LowSync<FormatoCliente> = JSONFileSyncPreset<FormatoCliente>('./Database/Personas/clientes.json', { clientes: [] });
+  private db_proveedores_: LowSync<FormatoProveedor> = JSONFileSyncPreset<FormatoProveedor>('./Database/Personas/proveedores.json', { proveedores: [] });
+
   constructor() {
-    let defaultData: DataFormat = { sillas: [], mesas: [] };
-    const db: LowSync<DataFormat> = JSONFileSyncPreset<DataFormat>('./Database/muebles.json', defaultData);
-    this.databases_.set('muebles', db);
-    // TODO: Añadir más bases de datos
-    for (const key in db.data) {
+    // Se obtiene de la base de datos los muebles que contiene, para posteriormente almacenarlo de la siguiente manera:
+    // Tipo de mueble:
+    //   
+    for (const key in this.db_muebles_.data) {
       let tempMap: Map<string, Mueble[]> | undefined = this.muebles_.get(key);
       if (!this.muebles_.has(key)) {
         this.muebles_.set(key, new Map<string, Mueble[]>());
         tempMap = this.muebles_.get(key);
       }
-      db.data[key].forEach((mueble: Mueble) => {
+      this.db_muebles_.data[key].forEach((mueble: Mueble) => {
         if (!tempMap?.has(mueble.nombre)) {
           tempMap?.set(mueble.nombre, []);
         }
         tempMap?.get(mueble.nombre)?.push(mueble);
       });
     }
-    // console.log(this.muebles_.get('sillas'));
+
+    // Se obtiene de la base de datos los clientes que se van a inicializar, para posteriormente inicializarlos y empujarlos
+    this.db_clientes_.data.clientes.forEach((cliente: Cliente) => {
+      let clienteTemporal: Cliente = new Cliente(cliente.id, cliente.nombre, cliente.contacto.toString(), cliente.direccion);
+      this.clientes_.push(clienteTemporal);
+    });
+    // Se obtiene de la base de datos los proveedores que se van a inicializar, para posteriormente inicializarlos y empujarlos    
+    this.db_proveedores_.data.proveedores.forEach((proovedor: Proveedor) => {
+      let clienteTemporal: Proveedor = new Cliente(proovedor.id, proovedor.nombre, proovedor.contacto.toString(), proovedor.direccion);
+      this.proveedores_.push(clienteTemporal);
+    });
+    // TODO: Añadir la base de datos de transacciones - ¡Tanto venta, como devolución!
   }
 
   /**
@@ -71,6 +95,7 @@ export class BaseDeDatos {
       tipo?: string,
       descripcion?: string,
       ordenDesc?: boolean,
+      id?: number
     }, s_strat: sortStrategy<Mueble>): Mueble[] {
     let auxVec: Mueble[] = [];
     for (const m of this.muebles_.values()) {
@@ -79,7 +104,8 @@ export class BaseDeDatos {
           if (!searchObj.nombre && !searchObj.descripcion && !searchObj.tipo) return true;
           return searchObj.nombre && mueble.nombre.includes(searchObj.nombre) ||
             searchObj.descripcion && mueble.descripcion.includes(searchObj.descripcion) ||
-            searchObj.tipo && mueble.tipo === searchObj.tipo;
+            searchObj.tipo && mueble.tipo === searchObj.tipo ||
+            searchObj.id && mueble.id === searchObj.id;
         }));
       }
     }
@@ -89,7 +115,7 @@ export class BaseDeDatos {
 
 
   adicionarMueble(mueble: Mueble, categoria: Categoria): void {
-    const db = this.databases_.get('muebles')!;
+    const db = this.db_muebles_;
     // TODO: Añadir comprobación de que el ID no está repetido en la base de datos
 
     // Creamos el objeto que vamos a insertar en la base de datos
@@ -111,7 +137,7 @@ export class BaseDeDatos {
         this.muebles_.get(mueble)!.get(m)!.filter((mueble: Mueble) => mueble.id !== id);
       }
     }
-    const db = this.databases_.get('muebles')!;
+    const db = this.db_muebles_;
     for (let mueble in db.data) {
       for (let i = 0; i < db.data[mueble].length; i++) {
         if (db.data[mueble][i].id === id) {
@@ -141,7 +167,9 @@ let a: Silla = new Silla(89, 'Silla plástica', 'Madera de caoba', 'Maderita', {
 
 const db = new BaseDeDatos();
 db.adicionarMueble(a, Categoria.SILLA);
-db.deleteMueble(89);
+setTimeout(() => {
+  db.deleteMueble(89);
+}, 2000);
 
 
 
