@@ -17,7 +17,8 @@ export abstract class Transaccion {
   protected importe_: number;
   protected mueble_ : number;
   protected persona_ : string;
- 
+  // Signature para indexar propiedades
+  [key: string]: unknown;
   constructor(fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
     this.fecha_ = fecha;
     this.importe_ = importe;

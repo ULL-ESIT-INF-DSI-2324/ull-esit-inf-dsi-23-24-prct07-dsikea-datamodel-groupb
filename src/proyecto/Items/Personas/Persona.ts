@@ -13,6 +13,8 @@
  */
 export abstract class Persona {
   protected contacto_: number;
+  // Signature para indexar propiedades
+  [key: string]: unknown;
   constructor(protected id_ : number, protected nombre_ : string, contacto : string, protected direccion_ : string) {
     if (!/^\d{9}$/.test(contacto)) {
       throw new Error('El contacto debe tener 9 dígitos');

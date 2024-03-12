@@ -8,30 +8,19 @@
  *  > Omar Suárez Doro (alu0101483474@ull.edu.es)
  */
 
-import { Mueble } from '../Items/Muebles/Mueble.js';
 import { JSONFileSyncPreset } from 'lowdb/node';
-import { sortStrategy } from '../Interfaces/Interfaces.js';
 import { LowSync } from 'lowdb';
+import { Mueble } from '../Items/Muebles/Mueble.js';
+import { sortStrategy } from '../Interfaces/Interfaces.js';
+import { OrdenarPorId } from '../BaseDeDatos/OrdenarPorId.js';
 import { Silla } from '../Items/Muebles/Silla.js'
 import { Cliente } from '../Items/Personas/Cliente.js';
 import { Proveedor } from '../Items/Personas/Proveedor.js';
+import { FormatoMueble, FormatoCliente, FormatoProveedor, FormatoTransaccion } from '../Interfaces/Types.js';
 
-/**
- * Formato de los datos que se obtendran del JSON
- */
-export type FormatoMueble = {
-  [key: string]: Mueble[];
-  sillas: Mueble[];
-  mesas: Mueble[];
-}
+import { Venta } from '../Items/Transacciones/Venta.js';
+import { Devolucion } from '../Items/Transacciones/Devolucion.js';
 
-export type FormatoCliente = {
-  clientes: Cliente[];
-}
-
-export type FormatoProveedor = {
-  proveedores: Proveedor[];
-}
 
 /**
  * Categoría de los muebles
@@ -48,14 +37,17 @@ export class BaseDeDatos {
   private muebles_: Map<string, Map<string, Mueble[]>> = new Map<string, Map<string, Mueble[]>>();
   private clientes_: Cliente[] = [];
   private proveedores_: Proveedor[] = [];
+  private ventas_: Venta[] = [];
+  private devoluciones_: Devolucion[] = [];
   private db_muebles_: LowSync<FormatoMueble> = JSONFileSyncPreset<FormatoMueble>('./Database/muebles.json', { sillas: [], mesas: [] });
   private db_clientes_: LowSync<FormatoCliente> = JSONFileSyncPreset<FormatoCliente>('./Database/Personas/clientes.json', { clientes: [] });
   private db_proveedores_: LowSync<FormatoProveedor> = JSONFileSyncPreset<FormatoProveedor>('./Database/Personas/proveedores.json', { proveedores: [] });
+  private db_transacciones_: LowSync<FormatoTransaccion> = JSONFileSyncPreset<FormatoTransaccion>('./Database/Transacciones/transacciones.json', { ventas: [], devoluciones: [] });
 
   constructor() {
     // Se obtiene de la base de datos los muebles que contiene, para posteriormente almacenarlo de la siguiente manera:
     // Tipo de mueble:
-    //   
+    //   Nombre del mueble: [Mueble1, Mueble2, ...]
     for (const key in this.db_muebles_.data) {
       let tempMap: Map<string, Mueble[]> | undefined = this.muebles_.get(key);
       if (!this.muebles_.has(key)) {
@@ -80,7 +72,20 @@ export class BaseDeDatos {
       let clienteTemporal: Proveedor = new Cliente(proovedor.id, proovedor.nombre, proovedor.contacto.toString(), proovedor.direccion);
       this.proveedores_.push(clienteTemporal);
     });
+    
     // TODO: Añadir la base de datos de transacciones - ¡Tanto venta, como devolución!
+    // TODO: TESTEAR QUE FUNCIONA
+    
+    // Se obtiene de la base de datos las ventas que se van a inicializar, para posteriormente inicializarlas y empujarlas
+    this.db_transacciones_.data.ventas.forEach((venta: Venta) => {
+      let ventaTemporal: Venta = new Venta(venta.fecha, venta.importe, venta.mueble, venta.persona);
+      this.ventas_.push(ventaTemporal);
+    });
+    // Se obtiene de la base de datos las devoluciones que se van a inicializar, para posteriormente inicializarlas y empujarlas
+    this.db_transacciones_.data.devoluciones.forEach((devolucion: Devolucion) => {
+      let devolucionTemporal: Devolucion = new Devolucion(devolucion.fecha, devolucion.importe, devolucion.mueble, devolucion.persona);
+      this.devoluciones_.push(devolucionTemporal);
+    });
   }
 
   /**
@@ -101,7 +106,7 @@ export class BaseDeDatos {
     for (const m of this.muebles_.values()) {
       for (const mueble of m.values()) {
         auxVec.push(...mueble.filter((mueble) => {
-          if (!searchObj.nombre && !searchObj.descripcion && !searchObj.tipo) return true;
+          if (!searchObj.nombre && !searchObj.descripcion && !searchObj.tipo && !searchObj.id) return true;
           return searchObj.nombre && mueble.nombre.includes(searchObj.nombre) ||
             searchObj.descripcion && mueble.descripcion.includes(searchObj.descripcion) ||
             searchObj.tipo && mueble.tipo === searchObj.tipo ||
@@ -115,9 +120,10 @@ export class BaseDeDatos {
 
 
   adicionarMueble(mueble: Mueble, categoria: Categoria): void {
+    if (this.buscarMueble({ id: mueble.id }, new OrdenarPorId()).length !== 0) {
+      throw new Error('ID repetido');
+    }
     const db = this.db_muebles_;
-    // TODO: Añadir comprobación de que el ID no está repetido en la base de datos
-
     // Creamos el objeto que vamos a insertar en la base de datos
     let objectToPush: any = {};
     if (db) {
@@ -127,20 +133,26 @@ export class BaseDeDatos {
     }
     this.insertarMuebleCategoria(categoria, mueble);
     db.data[categoria].push(objectToPush as Mueble);
-    console.log(this.muebles_);
     db.write();
   }
-
-  deleteMueble(id: Number): void {
+  /**
+   * Esta función elimina un mueble de la base de datos
+   * @param id_p El id del mueble que se va a eliminar de la base de datos
+   * @returns void
+   */
+  deleteMueble(id_p: number): void {
+    if (this.buscarMueble({ id: id_p }, new OrdenarPorId()).length === 0) {
+      throw new Error('ID no encontrado');
+    }
     for (let mueble in this.muebles_) {
       for (let m in this.muebles_.get(mueble)) {
-        this.muebles_.get(mueble)!.get(m)!.filter((mueble: Mueble) => mueble.id !== id);
+        this.muebles_.get(mueble)!.get(m)!.filter((mueble: Mueble) => mueble.id !== id_p);
       }
     }
     const db = this.db_muebles_;
     for (let mueble in db.data) {
       for (let i = 0; i < db.data[mueble].length; i++) {
-        if (db.data[mueble][i].id === id) {
+        if (db.data[mueble][i].id === id_p) {
           db.data[mueble].splice(i, 1);
           db.write();
           return;
@@ -148,7 +160,128 @@ export class BaseDeDatos {
       }
     }
   }
+  
+  /**
+   * Añade un cliente a la base de datos
+   * @param cliente Cliente a añadir
+   */
+  adicionarCliente(cliente: Cliente): void {
+    if (this.db_clientes_.data.clientes.find((c) => c.id === cliente.id)) {
+      throw new Error('ID repetido');
+    }
+    let objectToPush: any = {};
+    if (db) {
+      for (const prop in cliente) {
+        objectToPush[prop.slice(0, prop.length - 1)] = cliente[prop];
+      }
+    }
+    this.clientes_.push(cliente);
+    this.db_clientes_.data.clientes.push(objectToPush as Cliente);
+    this.db_clientes_.write();
+  }
 
+  /**
+   * Elimina un cliente de la base de datos
+   * @param id ID del cliente a eliminar
+   */
+  deleteCliente(id: number): void {
+    if (!this.db_clientes_.data.clientes.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    this.clientes_ = this.clientes_.filter((c) => c.id !== id);
+    this.db_clientes_.data.clientes = this.db_clientes_.data.clientes.filter((c) => c.id !== id);
+    this.db_clientes_.write();
+  }
+
+  /**
+   * Añade un proveedor a la base de datos
+   * @param proveedor Proveedor a añadir
+   */
+  adicionarProveedor(proveedor: Proveedor): void {
+    if (this.db_proveedores_.data.proveedores.find((c) => c.id === proveedor.id)) {
+      throw new Error('ID repetido');
+    }
+    let objectToPush: any = {};
+    if (db) {
+      for (const prop in proveedor) {
+        objectToPush[prop.slice(0, prop.length - 1)] = proveedor[prop];
+      }
+    }
+    this.proveedores_.push(proveedor);
+    this.db_proveedores_.data.proveedores.push(objectToPush as Proveedor);
+    this.db_proveedores_.write();
+  }
+
+  /**
+   * Elimina un proveedor de la base de datos
+   * @param id ID del proveedor a eliminar
+   */
+  deleteProveedor(id: number): void {
+    if (!this.db_proveedores_.data.proveedores.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    this.proveedores_ = this.proveedores_.filter((c) => c.id !== id);
+    this.db_proveedores_.data.proveedores = this.db_proveedores_.data.proveedores.filter((c) => c.id !== id);
+    this.db_proveedores_.write();
+  }
+
+  /**
+   * Añade una venta a la base de datos
+   * @param venta Venta a añadir
+   */
+  adicionarVenta(venta: Venta): void {
+    let objectToPush: any = {};
+    if (db) {
+      for (const prop in venta) {
+        objectToPush[prop.slice(0, prop.length - 1)] = venta[prop];
+      }
+    }
+    this.ventas_.push(venta);
+    this.db_transacciones_.data.ventas.push(objectToPush as Venta);
+    this.db_transacciones_.write();
+  }
+
+  /**
+   * Elimina una venta de la base de datos
+   * @param id ID de la venta a eliminar
+   */
+  deleteVenta(id: number): void {
+    if (!this.db_transacciones_.data.ventas.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    this.ventas_ = this.ventas_.filter((c) => c.id !== id);
+    this.db_transacciones_.data.ventas = this.db_transacciones_.data.ventas.filter((c) => c.id !== id);
+    this.db_transacciones_.write();
+  }
+
+  /**
+   * Añade una devolución a la base de datos
+   * @param devolucion Devolución a añadir
+   */
+  adicionarDevolucion(devolucion: Devolucion): void {
+    let objectToPush: any = {};
+    if (db) {
+      for (const prop in devolucion) {
+        objectToPush[prop.slice(0, prop.length - 1)] = devolucion[prop];
+      }
+    }
+    this.devoluciones_.push(devolucion);
+    this.db_transacciones_.data.devoluciones.push(objectToPush as Devolucion);
+  }
+
+  /**
+   * Elimina una devolución de la base de datos
+   * @param id ID de la devolución a eliminar
+   */
+  deleteDevolucion(id: number): void {
+    if (!this.db_transacciones_.data.devoluciones.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    this.devoluciones_ = this.devoluciones_.filter((c) => c.id !== id);
+    this.db_transacciones_.data.devoluciones = this.db_transacciones_.data.devoluciones.filter((c) => c.id !== id);
+    this.db_transacciones_.write();
+  }
+  
   /**
    * Esta función inserta un mueble en la categoría que le corresponde
    * @param categoria Esta función inserta un mueble en la categoría que le corresponde
@@ -163,22 +296,17 @@ export class BaseDeDatos {
 }
 
 let a: Silla = new Silla(89, 'Silla plástica', 'Madera de caoba', 'Maderita', { ancho: 20, largo: 10, alto: 32 }, 32, true, true);
-// let b : Silla = new Silla(10, 'Silla de jardín', 'Silla para decorar la terraza', 'Madera',{ ancho: 75, largo: 120, alto: 80 }, 150, false , false);
-
+let b: Cliente = new Cliente(99, 'Xupenjawer Mario', '666666666', 'Calle Falsa 123');
+let c: Proveedor = new Proveedor(100, 'Xupenjawer Mario', '666666666', 'Calle Falsa 123');
 const db = new BaseDeDatos();
 db.adicionarMueble(a, Categoria.SILLA);
+db.adicionarCliente(b);
+db.adicionarProveedor(c);
 setTimeout(() => {
   db.deleteMueble(89);
+  db.deleteCliente(99);
+  db.deleteProveedor(100);
 }, 2000);
 
 
 
-
-
-// console.log(db.buscarMueble({ nombre: 'Silla de Metal' }, {sort: () => (a: Mueble, b: Mueble) => a.id - b.id}));
-// console.log(db.buscarMueble({ nombre: 'Silla de Metal' }, {sort: () => (a: Mueble, b: Mueble) => a.id - b.id}));
-// // db.adicionarMueble(b);
-// setTimeout(() => {
-//   db.deleteMueble(a.id);
-//   db.deleteMueble(b.id);
-// }, 3000);
