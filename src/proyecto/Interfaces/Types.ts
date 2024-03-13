@@ -11,6 +11,7 @@ export type FormatoMueble = {
   [key: string]: Mueble[];
   sillas: Mueble[];
   mesas: Mueble[];
+  armarios: Mueble[];
 }
 
 /**

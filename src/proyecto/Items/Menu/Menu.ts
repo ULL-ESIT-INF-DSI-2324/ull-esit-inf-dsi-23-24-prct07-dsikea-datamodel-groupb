@@ -11,14 +11,23 @@
 import inquirer from 'inquirer';
 import * as ReadlineSync from 'readline-sync';
 import { sortStrategy } from '../../Interfaces/Interfaces.js';
-import { BaseDeDatos } from '../../BaseDeDatos/BaseDeDatos.js';
-import { Mueble } from '../Muebles/Mueble.js';
+import { BaseDeDatos, Categoria } from '../../BaseDeDatos/BaseDeDatos.js';
+import { Mueble, Dimension } from '../Muebles/Mueble.js';
+import { Silla } from '../Muebles/Silla.js';
+import { Mesa } from '../Muebles/Mesa.js';
+import { Armario } from '../Muebles/Armario.js';
 import { OrdenarAlfabeticamente } from '../../BaseDeDatos/OrdenarAlfabeticamente.js';
 import { OrdenarPorPrecio } from '../../BaseDeDatos/OrdenarPorPrecio.js';
 import { OrdenarPorId } from '../../BaseDeDatos/OrdenarPorId.js';
+import { Stock } from '../Stock/Stock.js';
+import { Cliente } from '../Personas/Cliente.js';
+import { Proveedor } from '../Personas/Proveedor.js';
+import { Devolucion } from '../Transacciones/Devolucion.js';
+import { Venta } from '../Transacciones/Venta.js';
+const gestor: Stock = Stock.getStock();
+const bbdd: BaseDeDatos = new BaseDeDatos(gestor);
 
-const bbdd = new BaseDeDatos();
- 
+
 /**
  * Función que muestra el menú de generación de informes.
  */
@@ -50,6 +59,40 @@ async function generarInformes() {
 /**
  * Función que muestra el menú de gestión de ventas y devoluciones.
  */
+async function menuDevolucionesTransacciones() {
+  const answer = await inquirer.prompt({
+    type: "list",
+    name: "option",
+    message: "Seleccione el tipo de transacción:",
+    choices: ["Añadir", "Borrar", "Volver"],
+  });
+
+  switch (answer.option) {
+    case "Añadir":
+      const id1: number = ReadlineSync.questionInt("Introduzca el id de la devolución que quiere añadir: ");
+      const fecha: string = ReadlineSync.question("Introduzca la fecha en la que se ha producido la devolución: ");
+      const importe : number = ReadlineSync.questionInt("Introduzca el importe a devolver: ");
+      const id_mueble: number = ReadlineSync.questionInt("Introduzca el id del mueble a devolver: ");
+      const persona: string = ReadlineSync.question("Introduzca el número de contacto de la persona que ha hecho la devolución ");
+      const devolucion = new Devolucion(id1, new Date(fecha),importe, id_mueble, persona);
+      bbdd.adicionarDevolucion(devolucion);
+      break;
+    case "Borrar":
+      const id: number = ReadlineSync.questionInt("Introduzca el id de la devolucion que quiere eliminar ");
+      bbdd.deleteDevolucion(id);
+      break;
+    case "Volver":
+      console.log("Volviendo al menú principal...");
+      main();
+      break;
+    default:
+      console.log("Opción no válida. Por favor, selecciona una opción válida.");
+  }
+}
+
+/**
+ * Función que muestra el menú de gestión de ventas y devoluciones.
+ */
 async function menuVentasTransacciones() {
   const answer = await inquirer.prompt({
     type: "list",
@@ -60,10 +103,17 @@ async function menuVentasTransacciones() {
 
   switch (answer.option) {
     case "Añadir":
-      console.log("Añadiendo venta...");
+      const id1: number = ReadlineSync.questionInt("Introduzca un id para la nueva venta (fecha y hora actual): ");
+      const fecha: string = ReadlineSync.question("Introduzca la fecha en la que se ha producido la venta: ");
+      const importe : number = ReadlineSync.questionInt("Introduzca el importe de la compra: ");
+      const id_mueble: number = ReadlineSync.questionInt("Introduzca el id del mueble que se ha vendido: ");
+      const persona: string = ReadlineSync.question("Introduzca el número de contacto de la persona que ha hecho la compra: ");
+      const venta = new Venta(id1, new Date(fecha),importe, id_mueble, persona);
+      bbdd.adicionarVenta(venta);
       break;
     case "Borrar":
-      console.log("Borrando venta...");
+      const id: number = ReadlineSync.questionInt("Introduzca el id de la venta que quiere eliminar ");
+      bbdd.deleteVenta(id);
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -87,12 +137,10 @@ async function menuTransacciones() {
 
   switch (answer.option) {
     case "Ventas":
-      console.log("Realizando venta...");
       menuVentasTransacciones();
       break;
     case "Devoluciones":
-      console.log("Realizando devolución...");
-      menuVentasTransacciones();
+      menuDevolucionesTransacciones();
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -100,11 +148,88 @@ async function menuTransacciones() {
       break;
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
-  
+
   }
 
 }
 
+
+async function menuTipoMuebleAñadir() {
+  const answer = await inquirer.prompt({
+    type: "list",
+    name: "option",
+    message: "Seleccione el tipo de mueble que quiere añadir:",
+    choices: ["Sillas", "Mesas", "Armarios", "Volver"],
+  });
+  const id: number = ReadlineSync.questionInt("Introduzca el id del mueble: ");
+  const nombre: string = ReadlineSync.question("Introduzca el nombre de mueble: ");
+  const descripcion: string = ReadlineSync.question("Introduzca la descripción del mueble: ");
+  const material: string = ReadlineSync.question("Introduzca el material del mueble: ");
+  const largo: number = ReadlineSync.questionInt("Introduzca el largo del mueble: ");
+  const ancho: number = ReadlineSync.questionInt("Introduzca el ancho del mueble: ");
+  const alto: number = ReadlineSync.questionInt("Introduzca el alto del mueble: ");
+  const dimensiones: Dimension = { alto: alto, ancho: ancho, largo: largo };
+  const precio: number = ReadlineSync.questionInt("Introduzca el precio del mueble: ");
+
+  switch (answer.option) {
+    case "Sillas":
+      const respaldo: boolean = ReadlineSync.keyInYN("Introduzca si la silla tiene respaldo o no: ") ? true : false;
+      const reposabrazos: boolean = ReadlineSync.keyInYN("Introduzca si la silla tiene reposabrazos o no: ") ? true : false;
+      const silla = new Silla(id, nombre, descripcion, material, dimensiones, precio, respaldo, reposabrazos);
+      bbdd.adicionarMueble(silla, Categoria.SILLA);
+      break;
+    case "Mesas":
+      const extensible: boolean = ReadlineSync.keyInYN("Introduzca si la mesa es extensible o no: ") ? true : false;
+      const cantidadSillas: number = ReadlineSync.questionInt("Introduzca la cantidad de sillas que tiene la mesa: ");
+      const mesa = new Mesa(id, nombre, descripcion, material, dimensiones, precio, extensible, cantidadSillas);
+      bbdd.adicionarMueble(mesa, Categoria.MESA);
+      break;
+    case "Armarios":
+      const cajones: boolean = ReadlineSync.keyInYN("Introduzca si el armario tiene cajones o no: ") ? true : false;
+      const cantidadPuertas: number = ReadlineSync.questionInt("Introduzca la cantidad de puertas que tiene el armario: ");
+      const armario = new Armario(id, nombre, descripcion, material, dimensiones, precio, cajones, cantidadPuertas);
+      bbdd.adicionarMueble(armario, Categoria.ARMARIO);
+      break;
+    case "Volver":
+      console.log("Volviendo al menú principal...");
+      main();
+      break;
+    default:
+      console.log("Opción no válida. Por favor, selecciona una opción válida.");
+  }
+}
+
+async function menuTipoMuebleBuscar() {
+  const answer = await inquirer.prompt({
+    type: "list",
+    name: "option",
+    message: "Seleccione el tipo de mueble por el que quiere buscar:",
+    choices: ["Sillas", "Mesas", "Armarios", "Volver"],
+  });
+  const opcion: estrategiaOrdenacion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 ")) - 1;
+  const descendente: boolean = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
+  switch (answer.option) {
+    case "Sillas":
+      const tipo = "Silla";
+      console.table(bbdd.buscarMueble({ tipo: tipo, ordenDesc: descendente }, returnStrat(opcion)));
+      break;
+    case "Mesas":
+      const tipoMesa = "Mesa";
+      console.log(returnStrat(opcion) instanceof OrdenarPorId);
+      console.table(bbdd.buscarMueble({ tipo: tipoMesa, ordenDesc: descendente }, returnStrat(opcion)));
+      break;
+    case "Armarios":
+      const tipoArmario = "Armario";
+      console.table(bbdd.buscarMueble({ tipo: tipoArmario, ordenDesc: descendente }, returnStrat(opcion)));
+      break;
+    case "Volver":
+      console.log("Volviendo al menú principal...");
+      main();
+      break;
+    default:
+      console.log("Opción no válida. Por favor, selecciona una opción válida.");
+  }
+}
 /**
  * Función que muestra el menú de búsqueda de muebles.
  */
@@ -118,18 +243,19 @@ async function menuBusquedaMuebles() {
   switch (answer.option) {
     case "Por nombre":
       // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
-      const nombre : string = ReadlineSync.question("Introduzca el nombre del mueble: ");
-      const opcion : estrategiaOrdenacion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 "));
-      const descendente : boolean = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
-      console.log(bbdd.buscarMueble({nombre: nombre, ordenDesc : descendente}, returnStrat(opcion)));
+      const nombre: string = ReadlineSync.question("Introduzca el nombre del mueble: ");
+      const opcion: estrategiaOrdenacion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 "));
+      const descendente: boolean = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
+      console.log(bbdd.buscarMueble({ nombre: nombre, ordenDesc: descendente }, returnStrat(opcion)));
       break;
     case "Por tipo":
-      // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
-      console.log("Buscando...");
+      menuTipoMuebleBuscar();
       break;
     case "Por descripción":
-      // se podrá mostrar ordenada alfabéticamente y por precio, tanto ascendente como descendente
-      console.log("Buscando...");
+      const descripcion: string = ReadlineSync.question("Introduzca el fragmento de descripción del mueble: ");
+      const opcionDesc: estrategiaOrdenacion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 "));
+      const descendenteDesc: boolean = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
+      console.log(bbdd.buscarMueble({ descripcion: descripcion, ordenDesc: descendenteDesc }, returnStrat(opcionDesc)));
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -179,16 +305,20 @@ async function menuMuebles() {
     message: "Seleccione la operación desdeada:",
     choices: ["Listar Muebles", "Añadir Mueble", "Eliminar Mueble", "Editar Mueble", "Buscar Mueble", "Volver"],
   });
-
+  let opcion: estrategiaOrdenacion;
+  let descendente: boolean;
   switch (answer.option) {
     case "Listar Muebles":
-      console.log("Listando muebles...");
+      opcion = parseInt(ReadlineSync.question("Introduzca la estrategia de ordenación: \n 1: Alfabéticamente \n 2: Por precio \n 3: Por id \n 👉 ")) - 1;
+      descendente = ReadlineSync.keyInYNStrict("¿Desea ordenar de forma descendente?:");
+      console.table(bbdd.buscarMueble({ ordenDesc: descendente }, returnStrat(opcion)));
       break;
     case "Añadir Mueble":
-      console.log("Añadiendo mueble...");
+      menuTipoMuebleAñadir();
       break;
     case "Eliminar Mueble":
-      console.log("Eliminando mueble...");
+      const id: number = ReadlineSync.questionInt("Introduzca el id del mueble a eliminar: ");
+      bbdd.deleteMueble(id);
       break;
     case "Editar Mueble":
       console.log("Editando mueble...");
@@ -202,7 +332,7 @@ async function menuMuebles() {
       break;
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
-  
+
   }
 }
 
@@ -219,13 +349,19 @@ async function menuClientes() {
 
   switch (answer.option) {
     case "Listar Clientes":
-      console.log("Listando clientes...");
+      console.table(bbdd.getClientes({ ordenDesc: false }));
       break;
     case "Añadir Cliente":
-      console.log("Añadiendo cliente...");
+      const id: number = ReadlineSync.questionInt("Introduzca el id del cliente: ");
+      const nombre: string = ReadlineSync.question("Introduzca el nombre del cliente: ");
+      const contacto: string = ReadlineSync.question("Introduzca el número de contacto del cliente: ");
+      const direccion: string = ReadlineSync.question("Introduzca la dirección del cliente: ");
+      const cliente = new Cliente(id, nombre, contacto, direccion);
+      bbdd.adicionarCliente(cliente);
       break;
     case "Eliminar Cliente":
-      console.log("Eliminando cliente...");
+      const id2: number = ReadlineSync.questionInt("Introduzca el id del cliente a eliminar: ");
+      bbdd.deleteCliente(id2);
       break;
     case "Editar Cliente":
       console.log("Editando cliente...");
@@ -239,7 +375,7 @@ async function menuClientes() {
       break;
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
-  
+
   }
 }
 
@@ -256,13 +392,19 @@ async function menuProveedores() {
 
   switch (answer.option) {
     case "Listar Proveedores":
-      console.log("Listando proveedores...");
+      console.table(bbdd.getProveedores({ ordenDesc: false }));
       break;
     case "Añadir Proveedor":
-      console.log("Añadiendo proveedor...");
+      const id: number = ReadlineSync.questionInt("Introduzca el id del proveedor: ");
+      const nombre: string = ReadlineSync.question("Introduzca el nombre del proveedor: ");
+      const contacto: string = ReadlineSync.question("Introduzca el número de contacto del proveedor: ");
+      const direccion: string = ReadlineSync.question("Introduzca la dirección del proveedor: ");
+      const proveedor = new Proveedor(id, nombre, contacto, direccion);
+      bbdd.adicionarProveedor(proveedor);
       break;
     case "Eliminar Proveedor":
-      console.log("Eliminando proveedor...");
+      const id2: number = ReadlineSync.questionInt("Introduzca el id del proveedor a eliminar: ");
+      bbdd.deleteProveedor(id2);
       break;
     case "Editar Proveedor":
       console.log("Editando proveedor...");
@@ -276,7 +418,6 @@ async function menuProveedores() {
       break;
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
-  
   }
 }
 
@@ -294,6 +435,7 @@ async function menuStock() {
   switch (answer.option) {
     case "Listar unidades disponibles":
       console.log(" stock...");
+      main();
       break;
     case "Transacciones":
       menuTransacciones();
@@ -309,7 +451,7 @@ async function menuStock() {
       break;
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
-  
+
   }
 }
 
@@ -322,9 +464,8 @@ async function main() {
     type: "list",
     name: "option",
     message: "¿Sobre qué quiere realizar una operación?",
-    choices: ["Muebles", "Clientes", "Proveedores", "Stock", "Volver"],
+    choices: ["Muebles", "Clientes", "Proveedores", "Stock", "Salir"],
   });
-  console.log("acabo de pasar por aquí");
   switch (answer.option) {
     case "Muebles":
       menuMuebles();
@@ -338,16 +479,16 @@ async function main() {
     case "Stock":
       menuStock();
       break;
-    case "Volver":
-     console.log("Saliendo del menú...");
-      return;
+    case "Salir":
+      console.log("Saliendo del menú...");
+      process.exit(0);
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
   }
 }
 
-function returnStrat(p : estrategiaOrdenacion) : sortStrategy<Mueble> {
-  let strat : sortStrategy<Mueble>;
+function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
+  let strat: sortStrategy<Mueble>;
   switch (p) {
     case estrategiaOrdenacion.ALFABETICAMENTE:
       strat = new OrdenarAlfabeticamente();
@@ -361,7 +502,7 @@ function returnStrat(p : estrategiaOrdenacion) : sortStrategy<Mueble> {
     default:
       strat = new OrdenarAlfabeticamente();
       break;
-  }  
+  }
   return strat;
 }
 

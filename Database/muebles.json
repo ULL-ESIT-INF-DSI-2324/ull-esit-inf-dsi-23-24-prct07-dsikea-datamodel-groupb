@@ -3,6 +3,7 @@
     {
       "id": 1001,
       "nombre": "Silla de madera",
+      "tipo": "Silla",
       "descripcion": "Silla de madera con respaldo y reposabrazos",
       "material": "Madera",
       "dimensiones": {
@@ -17,6 +18,7 @@
     {
       "id": 1002,
       "nombre": "Silla de comedor",
+      "tipo": "Silla",
       "descripcion": "Silla de comedor",
       "material": "Madera",
       "dimensiones": {
@@ -31,6 +33,7 @@
     {
       "id": 1003,
       "nombre": "Silla de Metal",
+      "tipo": "Silla",
       "descripcion": "Silla de Metal con respaldo y reposabrazos",
       "material": "Metal",
       "dimensiones": {
@@ -45,6 +48,7 @@
     {
       "id": 1004,
       "nombre": "Silla de aluminio",
+      "tipo": "Silla",
       "descripcion": "Silla de aluminio circular",
       "material": "Aluminio",
       "dimensiones": {
@@ -59,6 +63,7 @@
     {
       "id": 1005,
       "nombre": "Silla de plástico",
+      "tipo": "Silla",
       "descripcion": "Silla de plástico con respaldo",
       "material": "Plástico",
       "dimensiones": {
@@ -73,6 +78,7 @@
     {
       "id": 1006,
       "nombre": "Silla de escritorio",
+      "tipo": "Silla",
       "descripcion": "Silla de escritorio para estudiar",
       "material": "Madera",
       "dimensiones": {
@@ -87,6 +93,7 @@
     {
       "id": 1007,
       "nombre": "Silla infantil",
+      "tipo": "Silla",
       "descripcion": "Silla para niños menores de 4 años",
       "material": "Plástico",
       "dimensiones": {
@@ -101,6 +108,7 @@
     {
       "id": 1008,
       "nombre": "Silla para tv",
+      "tipo": "Silla",
       "descripcion": "Silla para ver la televisión",
       "material": "Madera",
       "dimensiones": {
@@ -115,6 +123,7 @@
     {
       "id": 1009,
       "nombre": "Silla de Metal",
+      "tipo": "Silla",
       "descripcion": "Silla de metal con respaldo",
       "material": "Metal",
       "dimensiones": {
@@ -129,6 +138,7 @@
     {
       "id": 1010,
       "nombre": "Silla de madera",
+      "tipo": "Silla",
       "descripcion": "Silla de madera con respaldo",
       "material": "Madera",
       "dimensiones": {
@@ -145,6 +155,7 @@
     {
       "id": 2001,
       "nombre": "Mesa de madera",
+      "tipo": "Mesa",
       "descripcion": "Mesa de madera con 4 sillas",
       "material": "Madera",
       "dimensiones": {
@@ -159,6 +170,7 @@
     {
       "id": 2002,
       "nombre": "Mesa de comedor",
+      "tipo": "Mesa",
       "descripcion": "Mesa de comedor con 6 sillas",
       "material": "Madera",
       "dimensiones": {
@@ -173,6 +185,7 @@
     {
       "id": 2003,
       "nombre": "Mesa de Metal",
+      "tipo": "Mesa",
       "descripcion": "Mesa de metal con 4 sillas",
       "material": "Metal",
       "dimensiones": {
@@ -187,6 +200,7 @@
     {
       "id": 2004,
       "nombre": "Mesa de aluminio",
+      "tipo": "Mesa",
       "descripcion": "Mesa de aluminio con 6 sillas",
       "material": "Aluminio",
       "dimensiones": {
@@ -201,6 +215,7 @@
     {
       "id": 2005,
       "nombre": "Mesa de plástico",
+      "tipo": "Mesa",
       "descripcion": "Mesa de plástico con 4 sillas",
       "material": "Plástico",
       "dimensiones": {
@@ -215,6 +230,7 @@
     {
       "id": 2006,
       "nombre": "Mesa de escritorio",
+      "tipo": "Mesa",
       "descripcion": "Mesa de escritorio con silla",
       "material": "Madera",
       "dimensiones": {
@@ -225,6 +241,98 @@
       "precio": 250,
       "extensible": false,
       "sillas": 1
+    }
+  ],
+  "armarios": [
+    {
+      "id": 3001,
+      "nombre": "Armario de madera",
+      "tipo": "Armario",
+      "descripcion": "Armario de madera con 2 puertas",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 65,
+        "largo": 135
+      },
+      "precio": 300,
+      "cajones": false,
+      "puertas": 2
+    },
+    {
+      "id": 3002,
+      "nombre": "Armario de dormitorio",
+      "tipo": "Armario",
+      "descripcion": "Armario de dormitorio con 4 puertas y cajones",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 100,
+        "largo": 200
+      },
+      "precio": 500,
+      "cajones": true,
+      "puertas": 4
+    },
+    {
+      "id": 3003,
+      "nombre": "Armario de Salón",
+      "tipo": "Armario",
+      "descripcion": "Armario de salón con 2 puertas",
+      "material": "Metal",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 65,
+        "largo": 135
+      },
+      "precio": 400,
+      "cajones": false,
+      "puertas": 2
+    },
+    {
+      "id": 3004,
+      "nombre": "Armario de aluminio",
+      "tipo": "Armario",
+      "descripcion": "Armario de aluminio con 4 puertas",
+      "material": "Aluminio",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 100,
+        "largo": 200
+      },
+      "precio": 600,
+      "cajones": true,
+      "puertas": 4
+    },
+    {
+      "id": 3005,
+      "nombre": "Armario de plástico",
+      "tipo": "Armario",
+      "descripcion": "Armario de plástico con 2 puertas",
+      "material": "Plástico",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 65,
+        "largo": 135
+      },
+      "precio": 200,
+      "cajones": false,
+      "puertas": 2
+    },
+    {
+      "id": 3006,
+      "nombre": "Armario de metal",
+      "tipo": "Armario",
+      "descripcion": "Armario de metal con 2 puertas",
+      "material": "Metal",
+      "dimensiones": {
+        "alto": 180,
+        "ancho": 65,
+        "largo": 135
+      },
+      "precio": 250,
+      "cajones": false,
+      "puertas": 2
     }
   ]
 }

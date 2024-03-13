@@ -14,3 +14,19 @@
 export interface sortStrategy<T> {
   sort() : (a: T, b : T) => number;
 }
+
+/**
+ * Interfaz que representa un elemento Observador
+ */
+export interface Observer {
+  updateStock(): void;
+}
+
+/**
+ * Interfaz que represetna un elemento observable
+ */
+export interface Observable {
+  subscribe(observer: Observer): void;
+  unsubscribe(observer: Observer): void;
+  notify(): void;
+}

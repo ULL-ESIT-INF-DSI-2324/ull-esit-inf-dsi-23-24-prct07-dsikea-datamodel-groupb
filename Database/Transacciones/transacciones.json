@@ -1,8 +1,156 @@
 {
   "ventas": [
-
+      {
+          "fecha": "2010-10-12",
+          "importe": 50,
+          "id_mueble": 1001,
+          "dni_persona": 1
+      },
+      {
+          "fecha": "2024-03-13",
+          "importe": 120,
+          "id_mueble": 1002,
+          "dni_persona": 1
+      },
+      {
+          "fecha": "2024-02-10",
+          "importe": 200,
+          "id_mueble": 1003,
+          "dni_persona": 2
+      },
+      {
+          "fecha": "2024-01-10",
+          "importe": 80,
+          "id_mueble": 1004,
+          "dni_persona": 3
+      },
+      {
+          "fecha": "2023-12-09",
+          "importe": 100,
+          "id_mueble": 1006,
+          "dni_persona": 3
+      },
+      {
+          "fecha": "2023-12-23",
+          "importe": 200,
+          "id_mueble": 1003,
+          "dni_persona": 3
+      },
+      {
+          "fecha": "2022-01-19",
+          "importe": 30,
+          "id_mueble": 1005,
+          "dni_persona": 4
+      },
+      {
+          "fecha": "2022-08-14",
+          "importe": 100,
+          "id_mueble": 1006,
+          "dni_persona": 5
+      },
+      {
+          "fecha": "2024-02-10",
+          "importe": 60,
+          "id_mueble": 1008,
+          "dni_persona": 6
+      },
+      {
+          "fecha": "2021-02-10",
+          "importe": 60,
+          "id_mueble": 1008,
+          "dni_persona": 6
+      },
+      {
+          "fecha": "2020-01-01",
+          "importe": 70,
+          "id_mueble": 1010,
+          "dni_persona": 7
+      },
+      {
+          "fecha": "2014-07-09",
+          "importe": 300,
+          "id_mueble": 2001,
+          "dni_persona": 8
+      },
+      {
+          "fecha": "2023-11-05",
+          "importe": 500,
+          "id_mueble": 2002,
+          "dni_persona": 2
+      },
+      {
+          "fecha": "2022-03-21",
+          "importe": 600,
+          "id_mueble": 2004,
+          "dni_persona": 8
+      },
+      {
+          "fecha": "2023-12-29",
+          "importe": 200,
+          "id_mueble": 2005,
+          "dni_persona": 8
+      },
+      {
+          "fecha": "2023-11-28",
+          "importe": 250,
+          "id_mueble": 2006,
+          "dni_persona": 9
+      }
   ],
   "devoluciones": [
-    
+      {
+          "fecha": "2024-03-12",
+          "importe": 200,
+          "id_mueble": 2005,
+          "dni_persona": 8
+      },
+      {
+          "fecha": "2023-11-28",
+          "importe": 250,
+          "id_mueble": 2006,
+          "dni_persona": 2
+      },
+      {
+          "fecha": "2024-02-21",
+          "importe": 600,
+          "id_mueble": 2004,
+          "dni_persona": 10
+      },
+      {
+          "fecha": "2023-07-09",
+          "importe": 300,
+          "id_mueble": 2001,
+          "dni_persona": 3
+      },
+      {
+          "fecha": "2022-12-09",
+          "importe": 100,
+          "id_mueble": 1006,
+          "dni_persona": 4
+      },
+      {
+          "fecha": "2014-10-12",
+          "importe": 50,
+          "id_mueble": 1001,
+          "dni_persona": 2
+      },
+      {
+          "fecha": "2024-03-13",
+          "importe": 120,
+          "id_mueble": 1002,
+          "dni_persona": 4
+      },
+      {
+          "fecha": "2022-10-23",
+          "importe": 200,
+          "id_mueble": 1003,
+          "dni_persona": 5
+      },
+      {
+          "fecha": "2013-07-09",
+          "importe": 300,
+          "id_mueble": 2001,
+          "dni_persona": 1
+      }
   ]
 }

@@ -13,17 +13,27 @@
  * Clase abstracta que representa una Transaccion
  */
 export abstract class Transaccion {
+  protected id_: number;
   protected fecha_: Date;
   protected importe_: number;
   protected mueble_ : number;
   protected persona_ : string;
   // Signature para indexar propiedades
   [key: string]: unknown;
-  constructor(fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
+  constructor(id : number, fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
+    this.id_ = id;
     this.fecha_ = fecha;
     this.importe_ = importe;
     this.mueble_ = id_mueble;
     this.persona_ = dni_persona;
+  }
+
+  /**
+   * Devuelve el id de la transacción
+   * @returns Id de la transacción
+   */
+  public get id(): number {
+    return this.id_;
   }
 
   /**

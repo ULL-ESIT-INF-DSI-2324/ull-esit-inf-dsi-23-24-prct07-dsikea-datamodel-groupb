@@ -8,24 +8,24 @@
  *  > Omar Suárez Doro (alu0101483474@ull.edu.es)
  */
 
-import { Mueble } from "../Muebles/Mueble.js";
+//import { Mueble } from '../Muebles/Mueble.js';
+import { BaseDeDatos } from '../../BaseDeDatos/BaseDeDatos.js'
+import { Observer } from '../../Interfaces/Interfaces.js'
 
 /**
  * Clase Stock
  */
-export class Stock {
-  private items: Map<Mueble, number>;
+export class Stock implements Observer {
   private static stock: Stock;
-  
+  private db: BaseDeDatos = new BaseDeDatos(Stock.stock);
+  private actualStock = this.db.stock;
   /**
    * Constructor de la clase Stock
    */
-  private constructor() {
-    this.items = new Map<Mueble, number>();
-  }
+  private constructor() {}
   
   /**
-   * MMétodo que comprueba si existe una instancia de Stock
+   * Método que comprueba si existe una instancia de Stock
    * @returns Stock
    */
   public static getStock(): Stock {
@@ -35,32 +35,11 @@ export class Stock {
     return Stock.stock;
   }
 
-  getCantidadTotal() {
-    return Stock.stock.items.size;
+  updateStock() {
+    this.actualStock = this.db.stock;
   }
 
-  getCantidadMuebleConcreto(mueble: Mueble) : number | undefined {
-    return Stock.stock.items.get(mueble);
-  }
-
-  setCantidadMuebleConcreto(mueble: Mueble, cantidad: number) {
-    Stock.stock.items.set(mueble, cantidad);
-  }
-    
-  getItems() {
-    return Stock.stock.items;
-  }
-
-  setItems(items: Map<Mueble, number>) {
-    Stock.stock.items = items;
-  }
-
-  addItem(mueble: Mueble, cantidad: number) {
-    Stock.stock.items.set(mueble, cantidad);
-  }
-
-  
-  removeItem(mueble: Mueble) {
-    Stock.stock.items.delete(mueble);
-  }
+  displayStock() {
+    console.log(this.actualStock);
+  } 
 }

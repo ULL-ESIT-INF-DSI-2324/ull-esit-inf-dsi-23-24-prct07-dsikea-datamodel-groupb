@@ -15,7 +15,7 @@ import { Transaccion } from './Transaccion.js';
  * Clase que representa una Devolucion
  */
 export class Devolucion extends Transaccion {
-  constructor(fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
-    super(fecha, importe, id_mueble, dni_persona);
+  constructor(id: number, fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
+    super(id, fecha, importe, id_mueble, dni_persona);
   }
 }

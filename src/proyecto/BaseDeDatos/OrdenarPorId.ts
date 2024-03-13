@@ -18,10 +18,10 @@ export class OrdenarPorId implements sortStrategy<Mueble> {
   sort(): (a: Mueble, b: Mueble) => number {
     return (a: Mueble, b: Mueble) => {
       if (a.id < b.id) {
-        return -1;
+        return 1;
       }
       if (a.id > b.id) {
-        return 1;
+        return -1;
       }
       return 0;
     
