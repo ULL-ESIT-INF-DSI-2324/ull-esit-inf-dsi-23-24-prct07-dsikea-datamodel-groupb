@@ -11,6 +11,8 @@
 //import { Mueble } from '../Muebles/Mueble.js';
 import { BaseDeDatos } from '../../BaseDeDatos/BaseDeDatos.js'
 import { Observer } from '../../Interfaces/Interfaces.js'
+import { Venta } from '../Transacciones/Venta.js';
+import { Devolucion } from '../Transacciones/Devolucion.js';
 
 /**
  * Clase Stock
@@ -33,6 +35,21 @@ export class Stock implements Observer {
       Stock.stock = new Stock();
     }
     return Stock.stock;
+  } 
+
+  agregarVenta(venta : Venta) {
+    this.db.adicionarVenta(venta);
+  }
+  eliminarVenta(id : number) {
+    this.db.deleteVenta(id);
+  }
+
+  eliminarDevolucion(id : number) {
+    this.db.deleteDevolucion(id);
+  }
+
+  agregarDevolucion(devolucion : Devolucion) {
+    this.db.adicionarDevolucion(devolucion);
   }
 
   updateStock() {

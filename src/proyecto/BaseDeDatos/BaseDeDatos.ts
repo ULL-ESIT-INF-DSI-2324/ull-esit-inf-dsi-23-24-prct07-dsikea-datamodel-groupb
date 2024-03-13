@@ -71,13 +71,9 @@ export class BaseDeDatos implements Observable {
     });
     // Se obtiene de la base de datos los proveedores que se van a inicializar, para posteriormente inicializarlos y empujarlos    
     this.db_proveedores_.data.proveedores.forEach((proovedor: Proveedor) => {
-      let clienteTemporal: Proveedor = new Cliente(proovedor.id, proovedor.nombre, proovedor.contacto.toString(), proovedor.direccion);
+      let clienteTemporal: Proveedor = new Proveedor(proovedor.id, proovedor.nombre, proovedor.contacto.toString(), proovedor.direccion);
       this.proveedores_.push(clienteTemporal);
     });
-
-    // TODO: Añadir la base de datos de transacciones - ¡Tanto venta, como devolución!
-    // TODO: TESTEAR QUE FUNCIONA
-
     // Se obtiene de la base de datos las ventas que se van a inicializar, para posteriormente inicializarlas y empujarlas
     this.db_transacciones_.data.ventas.forEach((venta: Venta) => {
       let ventaTemporal: Venta = new Venta(venta.id, venta.fecha, venta.importe, venta.mueble, venta.persona);
@@ -143,6 +139,57 @@ export class BaseDeDatos implements Observable {
     db.write();
     this.notify();
   }
+
+  /**
+   * Esta función consiste en editar un mueble de la base de datos
+   * @param id El id del mueble que se va a editar
+   * @param modifyObject El objeto que indica los parámetros que se van a modificar	
+   * @returns 
+   */
+  editarMueble(id: number, modifyObject: {
+    nombre?: string,
+    descripcion?: string,
+    precio?: number,
+    material?: string,
+    dimensiones?: {
+      alto: number,
+      ancho: number,
+      largo: number
+    },
+  }): void {
+    if (this.buscarMueble({ id: id }, new OrdenarPorId()).length === 0) {
+      throw new Error('ID no encontrado');
+    }
+    // Change in the memory
+    for (let mueble in this.muebles_) {
+      for (let nombre in this.muebles_.get(mueble)) {
+        for (let element of this.muebles_.get(mueble)!.get(nombre)!) {
+          if (element.id !== id) { continue; }
+          if (modifyObject.nombre) { element.nombre = modifyObject.nombre; }
+          if (modifyObject.descripcion) { element.descripcion = modifyObject.descripcion; }
+          if (modifyObject.precio) { element.precio = modifyObject.precio; }
+          if (modifyObject.material) { element.material = modifyObject.material; }
+          if (modifyObject.dimensiones) { element.dimensiones = modifyObject.dimensiones; }
+        } 
+      }
+    }
+    // Change in the database
+    for (let mueble in this.db_muebles_.data) {
+      for (let i = 0; i < this.db_muebles_.data[mueble].length; i++) {
+        if (this.db_muebles_.data[mueble][i].id === id) {
+          if (modifyObject.nombre) { this.db_muebles_.data[mueble][i].nombre = modifyObject.nombre! }
+          if (modifyObject.descripcion) { this.db_muebles_.data[mueble][i].descripcion = modifyObject.descripcion!; }
+          if (modifyObject.precio) { this.db_muebles_.data[mueble][i].precio = modifyObject.precio!; }
+          if (modifyObject.material) { this.db_muebles_.data[mueble][i].material = modifyObject.material!;}
+          if (modifyObject.dimensiones) { this.db_muebles_.data[mueble][i].dimensiones = modifyObject.dimensiones!; }
+          this.db_muebles_.write();
+          return;
+        }
+      }
+    }    
+    this.notify();
+  }
+  
   /**
    * Esta función elimina un mueble de la base de datos
    * @param id_p El id del mueble que se va a eliminar de la base de datos
@@ -188,6 +235,35 @@ export class BaseDeDatos implements Observable {
   }
 
   /**
+   * Edita un cliente de la base de datos
+   * @param id ID del cliente a editar
+   */
+  editarCliente(id: number, modifyObject: {
+    nombre?: string,
+    contacto?: string,
+    direccion?: string
+  }): void {
+    if (this.db_clientes_.data.clientes.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    for (let i = 0; i < this.clientes_.length; i++) {
+      if (this.clientes_[i].id === id) {
+        if (modifyObject.nombre) { this.clientes_[i].nombre = modifyObject.nombre; }
+        if (modifyObject.contacto) { this.clientes_[i].contacto = +modifyObject.contacto; }
+        if (modifyObject.direccion) { this.clientes_[i].direccion = modifyObject.direccion; }
+      }
+    }
+    for (let i = 0; i < this.db_clientes_.data.clientes.length; i++) {
+      if (this.db_clientes_.data.clientes[i].id === id) {
+        if (modifyObject.nombre) { this.db_clientes_.data.clientes[i].nombre = modifyObject.nombre; }
+        if (modifyObject.contacto) { this.db_clientes_.data.clientes[i].contacto = +modifyObject.contacto; }
+        if (modifyObject.direccion) { this.db_clientes_.data.clientes[i].direccion = modifyObject.direccion; }
+      }
+    }
+    this.db_clientes_.write();
+  }
+
+  /**
    * Elimina un cliente de la base de datos
    * @param id ID del cliente a eliminar
    */
@@ -218,6 +294,35 @@ export class BaseDeDatos implements Observable {
   }
 
   /**
+   * Edita un proveedor de la base de datos
+   * @param id ID del proveedor a editar
+   */
+  editarProveedor(id: number, modifyObject: {
+    nombre?: string,
+    contacto?: string,
+    direccion?: string
+  }): void {
+    if (this.db_proveedores_.data.proveedores.find((c) => c.id === id)) {
+      throw new Error('ID no encontrado');
+    }
+    for (let i = 0; i < this.proveedores_.length; i++) {
+      if (this.proveedores_[i].id === id) {
+        if (modifyObject.nombre) { this.proveedores_[i].nombre = modifyObject.nombre; }
+        if (modifyObject.contacto) { this.proveedores_[i].contacto = +modifyObject.contacto; }
+        if (modifyObject.direccion) { this.proveedores_[i].direccion = modifyObject.direccion; }
+      }
+    }
+    for (let i = 0; i < this.db_proveedores_.data.proveedores.length; i++) {
+      if (this.db_proveedores_.data.proveedores[i].id === id) {
+        if (modifyObject.nombre) { this.db_proveedores_.data.proveedores[i].nombre = modifyObject.nombre; }
+        if (modifyObject.contacto) { this.db_proveedores_.data.proveedores[i].contacto = +modifyObject.contacto; }
+        if (modifyObject.direccion) { this.db_proveedores_.data.proveedores[i].direccion = modifyObject.direccion; }
+      }
+    }
+    this.db_proveedores_.write();
+  }
+
+  /**
    * Elimina un proveedor de la base de datos
    * @param id ID del proveedor a eliminar
    */
@@ -238,6 +343,9 @@ export class BaseDeDatos implements Observable {
     let objectToPush: any = {};
     for (const prop in venta) {
       objectToPush[prop.slice(0, prop.length - 1)] = venta[prop];
+      if (prop === 'fecha_') {
+        objectToPush[prop.slice(0, prop.length - 1)] = venta[prop].toLocaleDateString();
+      }
     }
     this.ventas_.push(venta);
     this.db_transacciones_.data.ventas.push(objectToPush as Venta);
@@ -265,6 +373,9 @@ export class BaseDeDatos implements Observable {
     let objectToPush: any = {};
     for (const prop in devolucion) {
       objectToPush[prop.slice(0, prop.length - 1)] = devolucion[prop];
+      if (prop === 'fecha_') {
+        objectToPush[prop.slice(0, prop.length - 1)] = devolucion[prop].toLocaleDateString();
+      }
     }
     this.devoluciones_.push(devolucion);
     this.db_transacciones_.data.devoluciones.push(objectToPush as Devolucion);
@@ -343,37 +454,33 @@ export class BaseDeDatos implements Observable {
     nombre?: string,
     contacto?: string,
     direccion?: string,
-    ordenDesc?: boolean
   }): Cliente[] {
-    let result = this.clientes_.filter((c) => {
+    return this.clientes_.filter((c) => {
       if (!searchObj.id && !searchObj.nombre && !searchObj.contacto && !searchObj.direccion) return true;
       return searchObj.id && c.id === searchObj.id ||
         searchObj.nombre && c.nombre.includes(searchObj.nombre) ||
         searchObj.contacto && c.contacto.toString().includes(searchObj.contacto) ||
         searchObj.direccion && c.direccion.includes(searchObj.direccion);
     });
-    return searchObj.ordenDesc ? result.reverse() : result;
   }
 
   /**
    * Esta función devuelve los clientes de la base de datos
-   * @returns Cliente[] 
+   * @returns Proveedor[]
    */
   getProveedores(searchObj : {
     id?: number,
     nombre?: string,
     contacto?: string,
-    direccion?: string,
-    ordenDesc?: boolean
-  }): Cliente[] {
-    let result = this.clientes_.filter((c) => {
+    direccion?: string
+  }): Proveedor[] {
+    return this.proveedores_.filter((c) => {
       if (!searchObj.id && !searchObj.nombre && !searchObj.contacto && !searchObj.direccion) return true;
       return searchObj.id && c.id === searchObj.id ||
         searchObj.nombre && c.nombre.includes(searchObj.nombre) ||
         searchObj.contacto && c.contacto.toString().includes(searchObj.contacto) ||
         searchObj.direccion && c.direccion.includes(searchObj.direccion);
     });
-    return searchObj.ordenDesc ? result.reverse() : result;
   }
   /**
    * Esta función devuelve los proveedores de la base de datos

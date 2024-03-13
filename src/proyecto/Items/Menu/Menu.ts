@@ -75,11 +75,11 @@ async function menuDevolucionesTransacciones() {
       const id_mueble: number = ReadlineSync.questionInt("Introduzca el id del mueble a devolver: ");
       const persona: string = ReadlineSync.question("Introduzca el número de contacto de la persona que ha hecho la devolución ");
       const devolucion = new Devolucion(id1, new Date(fecha),importe, id_mueble, persona);
-      bbdd.adicionarDevolucion(devolucion);
+      gestor.agregarDevolucion(devolucion);
       break;
     case "Borrar":
       const id: number = ReadlineSync.questionInt("Introduzca el id de la devolucion que quiere eliminar ");
-      bbdd.deleteDevolucion(id);
+      gestor.eliminarDevolucion(id);
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -103,17 +103,17 @@ async function menuVentasTransacciones() {
 
   switch (answer.option) {
     case "Añadir":
-      const id1: number = ReadlineSync.questionInt("Introduzca un id para la nueva venta (fecha y hora actual): ");
+      const id1: number = ReadlineSync.questionInt("Introduzca un id para la nueva venta: ");
       const fecha: string = ReadlineSync.question("Introduzca la fecha en la que se ha producido la venta: ");
       const importe : number = ReadlineSync.questionInt("Introduzca el importe de la compra: ");
       const id_mueble: number = ReadlineSync.questionInt("Introduzca el id del mueble que se ha vendido: ");
-      const persona: string = ReadlineSync.question("Introduzca el número de contacto de la persona que ha hecho la compra: ");
+      const persona: string = ReadlineSync.question("Introduzca el número id de la persona que ha hecho la compra: ");
       const venta = new Venta(id1, new Date(fecha),importe, id_mueble, persona);
-      bbdd.adicionarVenta(venta);
+      gestor.agregarVenta(venta);
       break;
     case "Borrar":
       const id: number = ReadlineSync.questionInt("Introduzca el id de la venta que quiere eliminar ");
-      bbdd.deleteVenta(id);
+      gestor.eliminarVenta(id);
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -132,7 +132,7 @@ async function menuTransacciones() {
     type: "list",
     name: "option",
     message: "Seleccione el tipo de transacción:",
-    choices: ["Venta", "Devolución", "Volver"],
+    choices: ["Ventas", "Devoluciones", "Volver"],
   });
 
   switch (answer.option) {
@@ -269,7 +269,7 @@ async function menuBusquedaMuebles() {
 /**
  * Función que muestra el menú de búsqueda de clientes y proveedores.
  */
-async function menuBusquedaClientesyProveedores() {
+async function menuBusquedaClientesyProveedores(tipoPersona : number) {
   const answer = await inquirer.prompt({
     type: "list",
     name: "option",
@@ -278,13 +278,32 @@ async function menuBusquedaClientesyProveedores() {
   });
   switch (answer.option) {
     case "Por nombre y apellido":
-      console.log("Buscando...");
+      if (!tipoPersona) {
+        const nombre : string = ReadlineSync.question("Introduzca el nombre del cliente: ");
+        console.table(bbdd.getClientes({nombre: nombre}));
+      } else {
+        const nombre : string = ReadlineSync.question("Introduzca el nombre del proveedor: ");
+        console.table(bbdd.getProveedores({nombre: nombre}));
+      }
+     
       break;
     case "Por número de contacto":
-      console.log("Buscando...");
+      if (!tipoPersona) {
+        const numero : string = ReadlineSync.question("Introduzca el número de contacto del cliente: ");
+        console.table(bbdd.getClientes({contacto: numero}));
+      } else {
+        const numero : string = ReadlineSync.question("Introduzca el número de contacto del proveedor: ");
+        console.table(bbdd.getProveedores({contacto: numero}));
+      }
       break;
     case "Por dirección":
-      console.log("Buscando...");
+      if (!tipoPersona) {
+        const direccion : string = ReadlineSync.question("Introduzca la dirección del cliente: ");
+        console.table(bbdd.getClientes({direccion: direccion}));
+      } else {
+        const direccion : string = ReadlineSync.question("Introduzca la direccion del proveedor: ");
+        console.table(bbdd.getProveedores({direccion: direccion}));
+      }
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -321,7 +340,42 @@ async function menuMuebles() {
       bbdd.deleteMueble(id);
       break;
     case "Editar Mueble":
-      console.log("Editando mueble...");
+      const id1 : number = ReadlineSync.questionInt("Introduzca el id del mueble a editar: ");
+      console.log("Introduzca aquellos atributos del mueble que quiere editar:");
+      const nombre : string = ReadlineSync.question("Introduzca el nombre del mueble a editar: ");
+      const descripcion : string = ReadlineSync.question("Introduzca la descripción del mueble a editar: ");
+      const material : string = ReadlineSync.question("Introduzca el material del mueble a editar: ");
+      const alto : number = ReadlineSync.questionInt("Introduzca el alto del mueble a editar: ");  
+      const ancho : number = ReadlineSync.questionInt("Introduzca el ancho del mueble a editar: "); 
+      const largo : number = ReadlineSync.questionInt("Introduzca el largo del mueble a editar: "); 
+      const precio : number = ReadlineSync.questionInt("Introduzca el precio del mueble a editar: ");
+      const tipo : string = ReadlineSync.question("Introduzca el tipo del mueble a editar 'Silla', 'Mesa' o 'Armario'")
+      let object : any = {};
+      if (nombre) {
+        object.nombre = nombre;
+      }
+      if (descripcion) {
+        object.descripcion = descripcion;
+      }
+      if (material) {
+        object.material = material;
+      }
+      if (alto) {
+        object.alto = alto;
+      }
+      if (ancho) {
+        object.ancho = ancho;
+      }
+      if (largo) {
+        object.largo = largo;
+      }
+      if (precio) {
+        object.precio = precio;
+      }
+      if (tipo) {
+        object.tipo = tipo;
+      }
+      bbdd.editarMueble(id1, object)
       break;
     case "Buscar Mueble":
       menuBusquedaMuebles();
@@ -349,7 +403,7 @@ async function menuClientes() {
 
   switch (answer.option) {
     case "Listar Clientes":
-      console.table(bbdd.getClientes({ ordenDesc: false }));
+      console.table(bbdd.getClientes({}));
       break;
     case "Añadir Cliente":
       const id: number = ReadlineSync.questionInt("Introduzca el id del cliente: ");
@@ -367,7 +421,7 @@ async function menuClientes() {
       console.log("Editando cliente...");
       break;
     case "Buscar Cliente":
-      menuBusquedaClientesyProveedores();
+      menuBusquedaClientesyProveedores(0);
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -392,7 +446,7 @@ async function menuProveedores() {
 
   switch (answer.option) {
     case "Listar Proveedores":
-      console.table(bbdd.getProveedores({ ordenDesc: false }));
+      console.table(bbdd.getProveedores({}));
       break;
     case "Añadir Proveedor":
       const id: number = ReadlineSync.questionInt("Introduzca el id del proveedor: ");
@@ -410,7 +464,7 @@ async function menuProveedores() {
       console.log("Editando proveedor...");
       break;
     case "Buscar Proveedor":
-      menuBusquedaClientesyProveedores();
+      menuBusquedaClientesyProveedores(1);
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");
@@ -434,16 +488,14 @@ async function menuStock() {
 
   switch (answer.option) {
     case "Listar unidades disponibles":
-      console.log(" stock...");
+      gestor.displayStock();
       main();
       break;
     case "Transacciones":
       menuTransacciones();
-      console.log(" stock...");
       break;
     case "Generar informes":
       generarInformes();
-      console.log("Infomes stock...");
       break;
     case "Volver":
       console.log("Volviendo al menú principal...");

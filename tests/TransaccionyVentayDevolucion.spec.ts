@@ -12,8 +12,8 @@ describe('Tests de la clase Venta (extiende Transaccion)', () => {
   let venta1 : Venta;
   let venta2 : Venta;
   beforeEach(() => {
-    venta1 = new Venta(new Date(2024,3,7), 90, 1, "Paco Martín");
-    venta2 = new Venta(new Date(2024,10,7), 190, 2, "Lola Lolita");
+    venta1 = new Venta(1, new Date(2024,3,7), 90, 1, "Paco Martín");
+    venta2 = new Venta(2, new Date(2024,10,7), 190, 2, "Lola Lolita");
   });
 
   it('Se crea correctamente un objeto Venta', () => {
@@ -24,10 +24,12 @@ describe('Tests de la clase Venta (extiende Transaccion)', () => {
   })
 
   it('Se comprueba que los getters devuelven los valores correctos', () => {
+    expect(venta1.id).to.be.equal(1);
     expect(venta1.fecha).to.be.eql(new Date(2024,3,7));
     expect(venta1.importe).to.be.equal(90);
     expect(venta1.mueble).to.be.equal(1);
     expect(venta1.persona).to.be.equal("Paco Martín");
+    expect(venta2.id).to.be.equal(2);
     expect(venta2.fecha).to.be.eql(new Date(2024,10,7));
     expect(venta2.importe).to.be.equal(190);
     expect(venta2.mueble).to.be.equal(2);
@@ -58,8 +60,8 @@ describe('Tests de la clase Devolucion (extiende Transacciones)', () => {
     let devolucion1 : Devolucion;
     let devolucion2 : Devolucion;
     beforeEach(() => {
-      devolucion1 = new Devolucion(new Date(2024,3,7), 90, 1, "Pedro Picapiedra");
-      devolucion2 = new Devolucion(new Date(2024,10,7), 190, 2, "David Broncano");
+      devolucion1 = new Devolucion(3, new Date(2024,3,7), 90, 1, "Pedro Picapiedra");
+      devolucion2 = new Devolucion(4, new Date(2024,10,7), 190, 2, "David Broncano");
     });
 
   it('Se crea correctamente un objeto Devolucion', () => {
@@ -70,10 +72,12 @@ describe('Tests de la clase Devolucion (extiende Transacciones)', () => {
   })
 
   it('Se comprueba que los getters devuelven los valores correctos', () => {
+    expect(devolucion1.id).to.be.equal(3);
     expect(devolucion1.fecha).to.be.eql(new Date(2024,3,7));
     expect(devolucion1.importe).to.be.equal(90);
     expect(devolucion1.mueble).to.be.equal(1);
     expect(devolucion1.persona).to.be.equal("Pedro Picapiedra");
+    expect(devolucion2.id).to.be.equal(4);
     expect(devolucion2.fecha).to.be.eql(new Date(2024,10,7));
     expect(devolucion2.importe).to.be.equal(190);
     expect(devolucion2.mueble).to.be.equal(2);

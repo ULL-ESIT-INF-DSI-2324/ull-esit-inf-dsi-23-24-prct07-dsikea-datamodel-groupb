@@ -99,4 +99,11 @@ export abstract class Transaccion {
   public set persona(persona: string) {
     this.persona_ = persona;
   }
+
+  /**
+   * Setter del id de la transacción
+   */
+  public set id(id: number) {
+    this.id_ = id;
+  }
 }
