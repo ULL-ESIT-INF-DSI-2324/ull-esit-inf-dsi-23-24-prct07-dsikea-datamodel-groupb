@@ -1,0 +1,28 @@
+INFORMACIÓN ACERCA DEL CLIENTE, id: 8
+Nombre: Luisa Torres
+Dirección: Avenida Oeste 951
+Teléfono: 369258147
+
+VENTAS REALIZADAS POR EL CLIENTE: 
+ID de la venta: 12
+Fecha: 09/07/2014
+Mueble: 2001
+Importe: 300
+------------------------------------
+ID de la venta: 14
+Fecha: 21/03/2022
+Mueble: 2004
+Importe: 600
+------------------------------------
+ID de la venta: 15
+Fecha: 29/12/2023
+Mueble: 2005
+Importe: 200
+------------------------------------
+
+DEVOLUCIONES REALIZADAS POR EL CLIENTE: 
+ID de la devolución: 1
+Fecha: 12/03/2024
+Mueble: 2005
+Importe: 200
+------------------------------------

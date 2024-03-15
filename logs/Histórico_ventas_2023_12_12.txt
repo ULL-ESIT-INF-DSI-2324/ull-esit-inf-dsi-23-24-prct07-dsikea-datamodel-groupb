@@ -1,0 +1,66 @@
+REGISTRO DE LAS VENTAS REALIZADAS EL DÍA 12/12/2023:
+ID de la venta: 6
+Fecha: 12/12/2023
+Mueble: 1003
+Importe: 200
+------------------------------------
+ID de la venta: 15
+Fecha: 12/12/2023
+Mueble: 2005
+Importe: 200
+------------------------------------
+Facturación total: 400
+REGISTRO DE LAS VENTAS REALIZADAS EN EL MES 12/2023:
+ID de la venta: 6
+Fecha: 12/12/2023
+Mueble: 1003
+Importe: 200
+------------------------------------
+ID de la venta: 15
+Fecha: 12/12/2023
+Mueble: 2005
+Importe: 200
+------------------------------------
+ID de la venta: 16
+Fecha: 12/11/2023
+Mueble: 2006
+Importe: 250
+------------------------------------
+ID de la venta: 17
+Fecha: 12/11/2023
+Mueble: 1005
+Importe: 20
+------------------------------------
+Facturación total: 1070
+REGISTRO DE LAS VENTAS REALIZADAS EN EL AÑO 2023:
+ID de la venta: 5
+Fecha: 09/12/2023
+Mueble: 1006
+Importe: 100
+------------------------------------
+ID de la venta: 6
+Fecha: 12/12/2023
+Mueble: 1003
+Importe: 200
+------------------------------------
+ID de la venta: 13
+Fecha: 05/11/2023
+Mueble: 2002
+Importe: 500
+------------------------------------
+ID de la venta: 15
+Fecha: 12/12/2023
+Mueble: 2005
+Importe: 200
+------------------------------------
+ID de la venta: 16
+Fecha: 12/11/2023
+Mueble: 2006
+Importe: 250
+------------------------------------
+ID de la venta: 17
+Fecha: 12/11/2023
+Mueble: 1005
+Importe: 20
+------------------------------------
+Facturación total: 2340

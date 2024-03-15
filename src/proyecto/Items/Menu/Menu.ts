@@ -24,10 +24,17 @@ import { Cliente } from '../Personas/Cliente.js';
 import { Proveedor } from '../Personas/Proveedor.js';
 import { Devolucion } from '../Transacciones/Devolucion.js';
 import { Venta } from '../Transacciones/Venta.js';
+import {writeFile} from 'fs'
 const gestor: Stock = Stock.getStock();
 const bbdd: BaseDeDatos = new BaseDeDatos(gestor);
 
-
+function ConvertirMapaAString<T,U>(mapa: Map<T, U>): string {
+  let resultadoString = "";
+  mapa.forEach((cantidad, nombre) => {
+    resultadoString += `${nombre}: ${cantidad}\n`;
+  });
+  return resultadoString;
+}
 /**
  * Función que muestra el menú de generación de informes.
  */
@@ -36,16 +43,107 @@ async function generarInformes() {
     type: "list",
     name: "option",
     message: "Seleccione el tipo de informe:",
-    choices: ["Stock de una categoría de muebles", "históricos de ventas", "Volver"],
+    choices: ["Stock de una categoría de muebles","Stock de un mueble en concreto", "Stock de los 5 muebles más vendidos", "Información sobre clientes",  "Información sobre proveedores","Histórico de Ventas", "Volver"],
   });
 
   switch (answer.option) {
     case "Stock de una categoría de muebles":
-      console.log("Generando informe de stock...");
+      console.log("A continuación, se le pedirá que introduzca el tipo de mueble del que quiere obtener el stock.")
+      const tipo: string = ReadlineSync.question("'sillas', 'mesas', 'armarios': ");
+      const resultado : Map<string, number> | undefined = gestor.getStockParaInforme({tipo: tipo});
+      let resultadoStringAux = "Stock disponibles del tipo " + tipo + ":\n ";
+      resultadoStringAux += "____________________________________________________\n\n"
+      let resultadoString = ConvertirMapaAString<string,number>(resultado as Map<string, number>);
+      resultadoString += "____________________________________________________\n\n";
+      const nombreFichero = `Stock_${tipo}.txt`;
+      writeFile(`./logs/${nombreFichero}`, resultadoStringAux + resultadoString, () => {
+        console.log(`El fichero ${nombreFichero} se encuentra en la carpeta logs.`);
+      });
       break;
-    case "históricos de ventas":
-      console.log("Generando informe de ventas...");
+    case "Stock de un mueble en concreto":
+      const id: number = ReadlineSync.questionInt("Introduzca el id del mueble del que quiere obtener el stock: ");
+      const resultado1 : Map<string, number> | undefined = gestor.getStockParaInforme({id: id});
+      let resultadoString1 = "Stock disponibles del mueble con id " + id + ":\n * ";
+      resultadoString1 += ConvertirMapaAString<string,number>(resultado1 as Map<string, number>);
+
+      const nombreFichero1 = `Stock_mueble_${id}.txt`;
+      writeFile(`./logs/${nombreFichero1}`, resultadoString1, () => {
+        console.log(`El fichero ${nombreFichero1} se encuentra en la carpeta logs.`);
+      });
       break;
+    case  "Stock de los 5 muebles más vendidos":
+      const resultadoAux = "Top 5 muebles más vendidos:\n ____________________________\n\n"; 
+      const resultadoString2 = ConvertirMapaAString<number,number>(gestor.getMueblesMasVendidos());
+      const nombreFichero2 = `Top_5_más_vendidos.txt`;
+      writeFile(`./logs/${nombreFichero2}`,resultadoAux+ resultadoString2, () => {
+        console.log(`El fichero ${nombreFichero2} se encuentra en la carpeta logs.`);
+      });
+      break;
+    case "Información sobre clientes":
+      const identificador: number = ReadlineSync.questionInt("Introduzca el id del cliente a generar el informe: ");
+      const informe : string = gestor.getInfoCliente(identificador);
+      const nombreFichero3 = `Cliente_${identificador}.txt`;
+      writeFile(`./logs/${nombreFichero3}`, informe, () => {
+        console.log(`El fichero ${nombreFichero3} se encuentra en la carpeta logs.`);
+      });
+      break;
+      case "Información sobre proveedores":
+        const identificadorp: number = ReadlineSync.questionInt("Introduzca el id del proveedor a generar el informe: ");
+        const informep : string = gestor.getInfoProveedor(identificadorp);
+        const nombreFichero3p = `Proveedor_${identificadorp}.txt`;
+        writeFile(`./logs/${nombreFichero3p}`, informep, () => {
+          console.log(`El fichero ${nombreFichero3p} se encuentra en la carpeta logs.`);
+        });
+        break;
+      case "Histórico de Ventas":
+        const answer2 = await inquirer.prompt({
+          type: "list",
+          name: "option",
+          message: "A continuación, se le pedirá que introduzca el tipo de informe que quiere obtener.",
+          choices: ["Histórico anual", "Histórico Mensual + Anual", "Histórico Anual + Mensual + Diario", "Volver"],
+        });
+        switch(answer2.option) {
+          case "Histórico anual":
+            console.log("Introduzca el año del que quiere obtener el informe: ");
+            const anio: number = ReadlineSync.questionInt();
+            const informeAnual = gestor.getCalendarioVentas({anio: anio});
+            const nombreFichero4 = `Histórico_ventas_${anio}.txt`;
+            writeFile(`./logs/${nombreFichero4}`, informeAnual, () => {
+              console.log(`El fichero ${nombreFichero4} se encuentra en la carpeta logs.`);
+            });
+            break;
+
+          case "Histórico Mensual + Anual":
+            console.log("Introduzca el año del que quiere obtener el informe: ");
+            const anio1: number = ReadlineSync.questionInt();
+            console.log("Introduzca el mes del que quiere obtener el informe: ");
+            const mes: number = ReadlineSync.questionInt();
+            const informeMensual = gestor.getCalendarioVentas({anio: anio1, mes: mes});
+            const nombreFichero5 = `Histórico_ventas_${anio1}_${mes}.txt`;
+            writeFile(`./logs/${nombreFichero5}`, informeMensual, () => {
+              console.log(`El fichero ${nombreFichero5} se encuentra en la carpeta logs.`);
+            });
+            break;
+          case "Histórico Anual + Mensual + Diario":
+            console.log("Introduzca el año del que quiere obtener el informe: ");
+            const anio2: number = ReadlineSync.questionInt();
+            console.log("Introduzca el mes del que quiere obtener el informe: ");
+            const mes1: number = ReadlineSync.questionInt();
+            console.log("Introduzca el día del que quiere obtener el informe: ");
+            const dia: number = ReadlineSync.questionInt();
+            const informeDiario = gestor.getCalendarioVentas({anio: anio2, mes: mes1, dia: dia});
+            const nombreFichero6 = `Histórico_ventas_${anio2}_${mes1}_${dia}.txt`;
+            writeFile(`./logs/${nombreFichero6}`, informeDiario, () => {
+              console.log(`El fichero ${nombreFichero6} se encuentra en la carpeta logs.`);
+            });
+            break;
+
+            case "Volver":
+              console.log("Volviendo al menú principal...");
+              main();
+              break;
+        }
+        break;
     case "Volver":
       console.log("Volviendo al menú principal...");
       main();
@@ -387,7 +485,7 @@ async function menuMuebles() {
     default:
       console.log("Opción no válida. Por favor, selecciona una opción válida.");
 
-  }
+  };
 }
 
 /**
@@ -518,6 +616,7 @@ async function main() {
     message: "¿Sobre qué quiere realizar una operación?",
     choices: ["Muebles", "Clientes", "Proveedores", "Stock", "Salir"],
   });
+
   switch (answer.option) {
     case "Muebles":
       menuMuebles();
@@ -539,7 +638,7 @@ async function main() {
   }
 }
 
-function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
+export function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
   let strat: sortStrategy<Mueble>;
   switch (p) {
     case estrategiaOrdenacion.ALFABETICAMENTE:
@@ -558,7 +657,7 @@ function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
   return strat;
 }
 
-enum estrategiaOrdenacion {
+export enum estrategiaOrdenacion {
   ALFABETICAMENTE,
   PRECIO,
   ID

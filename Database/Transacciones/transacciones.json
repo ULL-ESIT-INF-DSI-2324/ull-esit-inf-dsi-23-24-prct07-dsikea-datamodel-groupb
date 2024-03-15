@@ -9,7 +9,7 @@
     },
     {
       "id": 2,
-      "fecha": "13/03/2024",
+      "fecha": "11/03/2024",
       "importe": 120,
       "mueble": 1002,
       "persona": 1
@@ -37,21 +37,21 @@
     },
     {
       "id": 6,
-      "fecha": "23/12/2023",
+      "fecha": "12/12/2023",
       "importe": 200,
       "mueble": 1003,
       "persona": 3
     },
     {
       "id": 7,
-      "fecha": "19/01/2022",
+      "fecha": "12/01/2022",
       "importe": 30,
       "mueble": 1005,
       "persona": 4
     },
     {
       "id": 8,
-      "fecha": "14/08/2022",
+      "fecha": "12/08/2022",
       "importe": 100,
       "mueble": 1006,
       "persona": 5
@@ -93,28 +93,28 @@
     },
     {
       "id": 14,
-      "fecha": "21/03/2022",
+      "fecha": "12/03/2022",
       "importe": 600,
       "mueble": 2004,
       "persona": 8
     },
     {
       "id": 15,
-      "fecha": "29/12/2023",
+      "fecha": "12/12/2023",
       "importe": 200,
       "mueble": 2005,
       "persona": 8
     },
     {
       "id": 16,
-      "fecha": "28/11/2023",
+      "fecha": "12/11/2023",
       "importe": 250,
       "mueble": 2006,
       "persona": 9
     },
     {
       "id": 17,
-      "fecha": "29/11/2023",
+      "fecha": "12/11/2023",
       "importe": 20,
       "mueble": 1005,
       "persona": "10"
@@ -130,21 +130,21 @@
     },
     {
       "id": 2,
-      "fecha": "28/11/2023",
+      "fecha": "12/11/2023",
       "importe": 250,
       "mueble": 2006,
       "persona": 2
     },
     {
       "id": 3,
-      "fecha": "21/02/2024",
+      "fecha": "12/02/2024",
       "importe": 600,
       "mueble": 2004,
       "persona": 10
     },
     {
       "id": 4,
-      "fecha": "09/07/2023",
+      "fecha": "12/12/2023",
       "importe": 300,
       "mueble": 2001,
       "persona": 3
@@ -165,14 +165,14 @@
     },
     {
       "id": 7,
-      "fecha": "13/03/2024",
+      "fecha": "12/03/2024",
       "importe": 120,
       "mueble": 1002,
       "persona": 4
     },
     {
       "id": 8,
-      "fecha": "23/10/2022",
+      "fecha": "12/10/2022",
       "importe": 200,
       "mueble": 1003,
       "persona": 5

@@ -1,0 +1,15 @@
+INFORMACIÓN ACERCA DEL PROVEEDOR, id: 9
+Nombre: Muebles de Lallys
+Dirección: Santa Cruz de Tenerife
+Teléfono: 131313131
+
+VENTAS REALIZADAS POR EL PROVEEDOR: 
+ID de la venta: 16
+Fecha: 28/11/2023
+Mueble: 2006
+Importe: 250
+------------------------------------
+
+DEVOLUCIONES REALIZADAS POR EL PROVEEDOR: 
+Gastado en ventas -> 250$
+ Ingresado por devoluciones -> 0$

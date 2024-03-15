@@ -1,0 +1,13 @@
+Stock disponibles del sillas:
+ ____________________________________________________
+
+Silla de madera: 2
+Silla de comedor: 1
+Silla de Metal: 2
+Silla de aluminio: 1
+Silla de plástico: 1
+Silla de escritorio: 1
+Silla infantil: 1
+Silla para tv: 1
+____________________________________________________
+

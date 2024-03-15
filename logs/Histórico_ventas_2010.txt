@@ -1,0 +1,7 @@
+REGISTRO DE LAS VENTAS REALIZADAS EN EL AÑO 2010:
+ID de la venta: 1
+Fecha: 12/10/2010
+Mueble: 1001
+Importe: 50
+------------------------------------
+Facturación total: 50

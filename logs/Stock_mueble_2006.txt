@@ -1,0 +1,2 @@
+Stock disponibles del mueble con id 2006:
+ * Mesa de escritorio: 1

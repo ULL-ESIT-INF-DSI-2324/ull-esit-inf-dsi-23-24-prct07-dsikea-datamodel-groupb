@@ -1,0 +1,6 @@
+Mesa de madera: 1
+Mesa de comedor: 1
+Mesa de Metal: 1
+Mesa de aluminio: 1
+Mesa de plástico: 1
+Mesa de escritorio: 1
