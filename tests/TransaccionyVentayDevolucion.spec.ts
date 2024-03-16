@@ -53,6 +53,8 @@ describe('Tests de la clase Venta (extiende Transaccion)', () => {
     expect(venta2.importe).to.be.equal(200);
     expect(venta2.mueble).to.be.equal(1);
     expect(venta2.persona).to.be.equal("Mario Casas");
+    venta1.id = 3;
+    expect(venta1.id).to.be.equal(3);
   })
 });
 

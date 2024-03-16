@@ -28,6 +28,9 @@ export type FormatoProveedor = {
   proveedores: Proveedor[];
 }
 
+/**
+ * Formato de las transacciones en el JSON
+ */
 export type FormatoTransaccion = {
   ventas: Venta[];
   devoluciones: Devolucion[];

@@ -118,9 +118,7 @@ export class BaseDeDatos implements Observable {
     return searchObj.ordenDesc ? auxVec : auxVec.reverse();
   }
 
-  buscarTransaccion(): void {
-
-  }
+  
 
   adicionarMueble(mueble: Mueble, categoria: Categoria): void {
     if (this.buscarMueble({ id: mueble.id }, new OrdenarPorId()).length !== 0) {
@@ -243,7 +241,7 @@ export class BaseDeDatos implements Observable {
     contacto?: string,
     direccion?: string
   }): void {
-    if (this.db_clientes_.data.clientes.find((c) => c.id === id)) {
+    if (!this.db_clientes_.data.clientes.find((c) => c.id === id)) {
       throw new Error('ID no encontrado');
     }
     for (let i = 0; i < this.clientes_.length; i++) {
@@ -302,7 +300,7 @@ export class BaseDeDatos implements Observable {
     contacto?: string,
     direccion?: string
   }): void {
-    if (this.db_proveedores_.data.proveedores.find((c) => c.id === id)) {
+    if (!this.db_proveedores_.data.proveedores.find((c) => c.id === id)) {
       throw new Error('ID no encontrado');
     }
     for (let i = 0; i < this.proveedores_.length; i++) {

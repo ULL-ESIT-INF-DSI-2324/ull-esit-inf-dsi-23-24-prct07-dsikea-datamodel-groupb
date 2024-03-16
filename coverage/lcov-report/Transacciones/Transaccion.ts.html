@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>94/94</span>
+                <span class='fraction'>109/109</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>94/94</span>
+                <span class='fraction'>109/109</span>
             </div>
         
             
@@ -156,10 +156,22 @@
 <a name='L91'></a><a href='#L91'>91</a>
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -185,6 +197,17 @@
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -249,6 +272,13 @@
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">12x</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Universidad de La Laguna
  * Asignatura: Desarrollo de Sistemas Informáticos
@@ -260,23 +290,31 @@
  */
 &nbsp;
 &nbsp;
-import { Mueble } from '../Muebles/Mueble.js';
-import { Persona } from '../Personas/Persona.js';
-&nbsp;
 /**
  * Clase abstracta que representa una Transaccion
  */
 export abstract class Transaccion {
+  protected id_: number;
   protected fecha_: Date;
   protected importe_: number;
-  protected mueble_ : Mueble;
-  protected persona_ : Persona;
- 
-  constructor(fecha: Date, importe: number, mueble: Mueble, persona: Persona) {
+  protected mueble_ : number;
+  protected persona_ : string;
+  // Signature para indexar propiedades
+  [key: string]: unknown;
+  constructor(id : number, fecha: Date, importe: number, id_mueble: number, dni_persona: string) {
+    this.id_ = id;
     this.fecha_ = fecha;
     this.importe_ = importe;
-    this.mueble_ = mueble;
-    this.persona_ = persona;
+    this.mueble_ = id_mueble;
+    this.persona_ = dni_persona;
+  }
+&nbsp;
+  /**
+   * Devuelve el id de la transacción
+   * @returns Id de la transacción
+   */
+  public get id(): number {
+    return this.id_;
   }
 &nbsp;
   /**
@@ -296,18 +334,18 @@ export abstract class Transaccion {
   }
   
   /**
-   * Devuelve el mueble de la transacción
+   * Devuelve el  nombre del mueble de la transacción
    * @returns Mueble de la transacción
    */
-  public get mueble(): Mueble {
+  public get mueble(): number {
     return this.mueble_;
   }
   
   /**
-   * Devuelve la persona de la transacción
+   * Devuelve el dni de la persona de la transacción
    * @returns Persona de la transacción
    */
-  public get persona(): Persona {
+  public get persona(): string {
     return this.persona_;
   }
 &nbsp;
@@ -328,19 +366,26 @@ export abstract class Transaccion {
   }
 &nbsp;
   /**
-   * Establece el mueble de la transacción
+   * Establece el id del mueble de la transacción
    * @param mueble Mueble de la transacción
    */
-  public set mueble(mueble: Mueble) {
+  public set mueble(mueble: number) {
     this.mueble_ = mueble;
   }
 &nbsp;
   /**
-   * Establece la persona de la transacción
+   * Establece el dni de la persona de la transacción
    * @param persona Persona de la transacción
    */
-  public set persona(persona: Persona) {
+  public set persona(persona: string) {
     this.persona_ = persona;
+  }
+&nbsp;
+  /**
+   * Setter del id de la transacción
+   */
+  public set id(id: number) {
+    this.id_ = id;
   }
 }</pre></td></tr></table></pre>
 
@@ -349,7 +394,7 @@ export abstract class Transaccion {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-07T19:07:58.045Z
+                at 2024-03-15T21:16:59.447Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -516,7 +516,23 @@ async function menuClientes() {
       bbdd.deleteCliente(id2);
       break;
     case "Editar Cliente":
-      console.log("Editando cliente...");
+      const idCliente : number = ReadlineSync.questionInt("Introduzca el id del cliente a editar: ");
+      console.log("Introduzca aquellos atributos del cliente que quiere editar:");
+      const nombreCliente : string = ReadlineSync.question("Introduzca el nombre del cliente a editar: ");
+      const contactoCliente : string = ReadlineSync.question("Introduzca el contacto del cliente a editar: ");
+      const direccionCliente : string = ReadlineSync.question("Introduzca la dirección del cliente a editar: ");
+      let objeto : any = {};
+     
+      if (nombreCliente) {
+        objeto.nombre = nombreCliente;
+      }
+      if (contactoCliente) {
+        objeto.contacto = contactoCliente;
+      }
+      if (direccionCliente) {
+        objeto.direccion = direccionCliente;
+      }
+      bbdd.editarCliente(idCliente, objeto);
       break;
     case "Buscar Cliente":
       menuBusquedaClientesyProveedores(0);
@@ -559,7 +575,23 @@ async function menuProveedores() {
       bbdd.deleteProveedor(id2);
       break;
     case "Editar Proveedor":
-      console.log("Editando proveedor...");
+      const idProveedor : number = ReadlineSync.questionInt("Introduzca el id del proveedor a editar: ");
+      console.log("Introduzca aquellos atributos del proveedor que quiere editar:");
+      const nombreProveedor : string = ReadlineSync.question("Introduzca el nombre del proveedor a editar: ");
+      const contactoProveedor : string = ReadlineSync.question("Introduzca el contacto del proveedor a editar: ");
+      const direccionProveedor : string = ReadlineSync.question("Introduzca la dirección del proveedor a editar: ");
+      let objeto : any = {};
+     
+      if (nombreProveedor) {
+        objeto.nombre = nombreProveedor;
+      }
+      if (contactoProveedor) {
+        objeto.contacto = contactoProveedor;
+      }
+      if (direccionProveedor) {
+        objeto.direccion = direccionProveedor;
+      }
+      bbdd.editarProveedor(idProveedor, objeto);
       break;
     case "Buscar Proveedor":
       menuBusquedaClientesyProveedores(1);

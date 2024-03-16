@@ -17,8 +17,4 @@ export class Proveedor extends Persona {
   constructor(id_ : number, nombre_ : string, contacto : string, direccion_ : string) {
     super(id_, nombre_, contacto, direccion_);
   }
-
-  // Getters & Setters
-  
-  
 }
