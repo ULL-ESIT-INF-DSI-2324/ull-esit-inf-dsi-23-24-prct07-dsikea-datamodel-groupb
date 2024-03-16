@@ -933,7 +933,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    16. Subscribe() ->
+    16. Subscribe() -> Método que permite añadir seguidores a los cambios que efectúe en este caso la base de datos.
 
     ```ts
     subscribe(observer: Observer): void {
@@ -941,7 +941,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    17. Unsubscribe() ->
+    17. Unsubscribe() -> Método que permite dejar de seguir los cambios que realice la base de datos.
 
     ```ts
     unsubscribe(): void {
