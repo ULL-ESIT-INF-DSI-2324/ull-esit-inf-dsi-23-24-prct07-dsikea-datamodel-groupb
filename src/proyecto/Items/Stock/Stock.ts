@@ -144,7 +144,12 @@ export class Stock implements Observer {
     const mapaOrdenado = new Map(array);
     return mapaOrdenado;
   }
-
+  
+  /**
+   * Método para obtener la información de un cliente
+   * @param id
+   * @returns string
+   */
   getInfoCliente(id: number) : string {
    const cliente : Cliente [] = this.db.getClientes({id: id});
    let resultado : string = 'INFORMACIÓN ACERCA DEL CLIENTE, id: ' + id + '\n';
@@ -186,7 +191,11 @@ export class Stock implements Observer {
     return resultado;
   }
 
-
+  /**
+   * Método para obtener la información de un proveedor
+   * @param id
+   * @returns string
+   */
   getInfoProveedor(id: number) : string {
     const cliente : Cliente [] = this.db.getProveedores({id: id});
     let resultado : string = 'INFORMACIÓN ACERCA DEL PROVEEDOR, id: ' + id + '\n';
@@ -229,6 +238,11 @@ export class Stock implements Observer {
      return resultado;
    }
 
+   /**
+    * Método para obtener el calendario de ventas
+    * @param searchObj
+    * @returns string
+    */
    getCalendarioVentas(searchObj: { dia?: number, mes?: number, anio?: number }): string {
     let facturacion: number = 0;
     let resultado: string = '';
@@ -283,5 +297,4 @@ export class Stock implements Observer {
     }
     return resultado;
 }
-
 }

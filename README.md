@@ -5,22 +5,17 @@
 - Asignatura: **Desarrollo de Sistemas Informáticos**
 - Para ejecutar: **node dist/proyecto/Items/Menu/Menu.js**
   
-[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2324/ull-esit-inf-dsi-23-24-prct06-generics-solid-OmarSuarezDoro/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2324/ull-esit-inf-dsi-23-24-prct06-generics-solid-OmarSuarezDoro?branch=main)
+[![Coveralls](https://github.com/ULL-ESIT-INF-DSI-2324/ull-esit-inf-dsi-23-24-prct07-dsikea-datamodel-groupb/actions/workflows/coveralls.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2324/ull-esit-inf-dsi-23-24-prct07-dsikea-datamodel-groupb/actions/workflows/coveralls.yml)
+
 # Índice
-- [Índice](#índice)
 - [1. 📚 Introducción 📚](#1--introducción-)
 - [2. 🧠 Trabajo previo 🧠](#2--trabajo-previo-)
 - [3. 🖥️ Desarrollo de la práctica 🖥️](#3-️-desarrollo-de-la-práctica-️)
-  - [Ejercicio 1 - La mudanza](#ejercicio-1---la-mudanza)
-  - [Ejercicio 2 - Facturas en diferentes formatos](#ejercicio-2---facturas-en-diferentes-formatos)
-  - [Ejercicio 3 - Gestor de ficheros](#ejercicio-3---gestor-de-ficheros)
-  - [Ejercicio 4 - Impresoras y escáneres](#ejercicio-4---impresoras-y-escáneres)
-  - [Ejercicio 5 - Servicio de mensajería](#ejercicio-5---servicio-de-mensajería)
-  - [Modificación 1 - Arithmeticable](#modificación-1---arithmeticable)
 - [4. 💡 Conclusiones 💡](#4--conclusiones-)
 - [5. 📘 Infografía y Webgrafía 📘](#5--infografía-y-webgrafía-)
 
 # 1. 📚 Introducción 📚
+
 Este informe tiene como objetivo la redacción de los pasos seguidos durante el desarrollo de la séptima practica de la asignatura **Desarrollo de Sistemas Informáticos**.
 
 # 2. 🧠 Trabajo previo 🧠
@@ -112,7 +107,7 @@ Se han realizado los siguientes resúmenes:
 > 13. En la misma página que estábamos seleccionamos la opción de JS en el siguiente paso y copiamos el contenido que se proporciona para la action.
 
 
-# 3. Desarrollo de la práctica 
+# 3. 🖥️ Desarrollo de la práctica 🖥️
 
   * CLASE ABSTRACTA MUEBLE
   
@@ -949,7 +944,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    18. InsertarMuebleCategoria() ->
+    18. InsertarMuebleCategoria() -> Método que permite añadir un nuevo mueble dependiendo de su categoría.
 
     ```ts
     private insertarMuebleCategoria(categoria: string, mueble: Mueble): void {
@@ -960,7 +955,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    19. get Stock() ->
+    19. get Stock() -> Getter para la obtención del Stock por mueble.
 
     ```ts
     get stock() {
@@ -975,7 +970,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    20. getClientes() ->
+    20. getClientes() -> Getter que dado al menos 1 de los parámetros, devuelve una lista de coincidencias con los clientes.
 
     ```ts
     getClientes(searchObj : {
@@ -994,7 +989,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    21. getProveedores() ->
+    21. getProveedores() -> Getter que dado al menos 1 de los parámetros, devuelve una lista de coincidencias con los proveedores.
 
     ```ts
     getProveedores(searchObj : {
@@ -1013,7 +1008,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    22. get Proveedores() ->
+    22. get Proveedores() -> Getter que devuelve todos los proveedores encontrados en la base de datos.
 
     ```ts
     get proveedores(): Proveedor[] {
@@ -1021,7 +1016,7 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    23. get Ventas() ->
+    23. get Ventas() -> Getter que devuelve todas las ventas encontradas en la base de datos.
 
     ```ts
     get ventas(): Venta[] {
@@ -1029,15 +1024,302 @@ Se han realizado los siguientes resúmenes:
     }
     ```
 
-    24. get Devoluciones() ->
+    24. get Devoluciones() -> Getter que devuelve todas las devoluciones encontradas en la base de datos.
 
     ```ts
     get devoluciones(): Devolucion[] {
       return this.devoluciones_;
     }
     ```
-
   
-
+  * CLASE STOCK SINGLETON (OBSERVADOR)
     
+    Debido a que la clase Stock no tiene sentido que se pueda instanciar múltiples veces, hemos optado por seguir el patón de diseño *Singleton* en su desarrollo. De esta forma, solo será necesario instanciar una única vez dicha clase e ir modificando el valor de sus atributos cuando sea necesario.
 
+    Cuenta con los siguientes atributos y constructor privados:
+
+    ```ts
+    private static stock: Stock;
+    private db: BaseDeDatos = new BaseDeDatos(Stock.stock);
+    private actualStock = this.db.stock;
+
+    private constructor() {}
+    ```
+
+    A continuación se detallan todos los métodos que componen esta clase:
+
+    1. getStock() -> Método para saber si la instancia de la clase está creada o no.
+
+    ```ts
+    public static getStock(): Stock {
+      if (!Stock.stock) {
+        Stock.stock = new Stock();
+      }
+      return Stock.stock;
+    } 
+    ```
+
+    2. agregarVenta() ->  Método para agregar una nueva venta a la base de datos.
+
+    ```ts
+    agregarVenta(venta : Venta) {
+      this.db.adicionarVenta(venta);
+    }
+    ```
+
+    3. eliminarVenta() -> Método para eliminar una venta de la base de datos.
+
+    ```ts
+    eliminarVenta(id : number) {
+      this.db.deleteVenta(id);
+    }
+    ```
+
+    4. eliminarDevolucion() -> Método para eliminar una devolución de la base de datos.
+
+    ```ts
+    eliminarDevolucion(id : number) {
+      this.db.deleteDevolucion(id);
+    }
+    ```
+
+    5. agregarDevolucion() -> Método para agregar una devolución a la base de datos.
+
+    ```ts
+    agregarDevolucion(devolucion : Devolucion) {
+      this.db.adicionarDevolucion(devolucion);
+    }
+    ```
+
+    6. updateStock() -> Método para actualizar el stock actual
+
+    ```ts
+    updateStock() {
+      this.actualStock = this.db.stock;
+    }
+    ```
+
+    7. displayStock() -> Método para mostrar por pantalla el stocck actual
+
+    ```ts
+    displayStock() {
+      console.log(this.actualStock);
+    } 
+    ```
+
+    8. getStockParaInforme() -> Método para formatear el stock para la exportación de informes
+
+    ```ts
+    getStockParaInforme(
+      searchObj: {
+        tipo?: string,
+        id?: number
+      }): Map<string, number> | undefined {
+      if (searchObj.tipo) {
+        console.log(this.actualStock.get(searchObj.tipo));
+        return this.actualStock.get(searchObj.tipo);
+      } else if (searchObj.id) {
+        const id : number = searchObj.id;
+        const opcion: estrategiaOrdenacion = 0;
+        const buscado : Mueble[] = this.db.buscarMueble({id: id}, returnStrat(opcion));
+        for (const mueble of buscado) {
+          for (const [categoria, subMap] of this.actualStock) {
+            for (const [nombre, cantidad] of subMap) {
+              if (mueble.nombre === nombre) {
+                console.log(`${categoria}:`);
+                console.log(`  ${nombre}: ${cantidad}`);
+                return new Map<string, number>([[nombre, cantidad]]);
+              }
+            }
+          }
+        }
+      }
+      return undefined;
+    }
+    ```
+
+    9. getMueblesMasVendidos() -> Getter para obtener los 5 muebles más vendidos
+
+    ```ts
+    getMueblesMasVendidos(): Map<number, number>{
+      const muebleNumeroVentas: Map<number, number> = new Map<number, number>();
+      const ventas: Venta[] = this.db.ventas;
+      for (const venta of ventas) {
+        let iterador : number = 1;
+        const id_mueble : number = venta.mueble;
+        if (muebleNumeroVentas.has(id_mueble)) {
+          muebleNumeroVentas.set(id_mueble, iterador + 1);
+          iterador++;
+        } else {
+          muebleNumeroVentas.set(id_mueble, 1);
+        }
+      }
+
+      const array = Array.from(muebleNumeroVentas.entries());
+      array.sort((a, b) => b[1] - a[1]).splice(5, array.length);
+      const mapaOrdenado = new Map(array);
+      return mapaOrdenado;
+    }
+    ```
+
+    10. getInfoCliente() ->  Getter para la obtención de información de un cliente específico
+
+    ```ts
+    getInfoCliente(id: number) : string {
+    const cliente : Cliente [] = this.db.getClientes({id: id});
+    let resultado : string = 'INFORMACIÓN ACERCA DEL CLIENTE, id: ' + id + '\n';
+    let gasto : number = 0;
+    let ingreso : number = 0;
+  
+      for (const c of cliente) {
+        resultado += 'Nombre: ' + c.nombre + '\n';
+        resultado += 'Dirección: ' + c.direccion + '\n';
+        resultado += 'Teléfono: ' + c.contacto + '\n';
+      }
+      resultado += '\n';
+      resultado += 'VENTAS REALIZADAS POR EL CLIENTE: \n';
+      const ventas : Venta [] = this.db.ventas;
+      for (const v of ventas) {
+        if (parseInt(v.persona) === id) {
+          resultado += 'ID de la venta: ' + v.id + '\n';
+          resultado += 'Fecha: ' + v.fecha + '\n';
+          resultado += 'Mueble: ' + v.mueble + '\n';
+          resultado += 'Importe: ' + v.importe + '\n';
+          gasto += v.importe;
+          resultado += '------------------------------------\n';
+        }
+      }
+      resultado += '\n';
+      resultado += 'DEVOLUCIONES REALIZADAS POR EL CLIENTE: \n';
+      const devoluciones : Devolucion [] = this.db.devoluciones;
+      for (const d of devoluciones) {
+        if (parseInt(d.persona) === id) {
+          resultado += 'ID de la devolución: ' + d.id + '\n';
+          resultado += 'Fecha: ' + d.fecha + '\n';
+          resultado += 'Mueble: ' + d.mueble + '\n';
+          resultado += 'Importe: ' + d.importe + '\n';
+          ingreso += d.importe;
+          resultado += '------------------------------------\n';
+        }
+      }
+      resultado += `Gastado en ventas -> ${gasto}$\n Ingresado por devoluciones -> ${ingreso}$\n`;
+      return resultado;
+    }
+    ```
+
+    11. getInfoProveedor() -> Getter para la obtención de información de un proveedor específico
+
+    ```ts
+    getInfoProveedor(id: number) : string {
+      const cliente : Cliente [] = this.db.getProveedores({id: id});
+      let resultado : string = 'INFORMACIÓN ACERCA DEL PROVEEDOR, id: ' + id + '\n';
+      let gasto : number = 0;
+      let ingreso : number = 0;
+    
+      for (const c of cliente) {
+        resultado += 'Nombre: ' + c.nombre + '\n';
+        resultado += 'Dirección: ' + c.direccion + '\n';
+        resultado += 'Teléfono: ' + c.contacto + '\n';
+      }
+      resultado += '\n';
+      resultado += 'VENTAS REALIZADAS POR EL PROVEEDOR: \n';
+      const ventas : Venta [] = this.db.ventas;
+      for (const v of ventas) {
+        if (parseInt(v.persona) === id) {
+          resultado += 'ID de la venta: ' + v.id + '\n';
+          resultado += 'Fecha: ' + v.fecha + '\n';
+          resultado += 'Mueble: ' + v.mueble + '\n';
+          resultado += 'Importe: ' + v.importe + '\n';
+          gasto += v.importe;
+          resultado += '------------------------------------\n';
+        }
+      }
+      resultado += '\n';
+      resultado += 'DEVOLUCIONES REALIZADAS POR EL PROVEEDOR: \n';
+      const devoluciones : Devolucion [] = this.db.devoluciones;
+      for (const d of devoluciones) {
+        if (parseInt(d.persona) === id) {
+          resultado += 'ID de la devolución: ' + d.id + '\n';
+          resultado += 'Fecha: ' + d.fecha + '\n';
+          resultado += 'Mueble: ' + d.mueble + '\n';
+          resultado += 'Importe: ' + d.importe + '\n';
+          ingreso += d.importe;
+          resultado += '------------------------------------\n';
+        }
+      }
+      resultado += '------------------------------------\n';
+      resultado += `Gastado en ventas -> ${gasto}$\n Ingresado por devoluciones -> ${ingreso}$\n`;
+      return resultado;
+    }
+    ```
+
+    12. getCalendarioVentas() -> Getter para la obtención de las ventas realizadas en una fecha específica.
+
+    ```ts
+      getCalendarioVentas(searchObj: { dia?: number, mes?: number, anio?: number }): string {
+      let facturacion: number = 0;
+      let resultado: string = '';
+      if (searchObj.dia && searchObj.mes && searchObj.anio) {
+        resultado += 'REGISTRO DE LAS VENTAS REALIZADAS EL DÍA ' + searchObj.dia + '/' + searchObj.mes + '/' + searchObj.anio + ':\n';
+          const ventas: Venta[] = this.db.ventas;
+          for (const v of ventas) {
+              const fechaVenta: Date = new Date(v.fecha);
+              if (fechaVenta.getDate() === searchObj.dia &&
+                  fechaVenta.getMonth() + 1 === searchObj.mes && 
+                  fechaVenta.getFullYear() === searchObj.anio) {
+                  resultado += 'ID de la venta: ' + v.id + '\n';
+                  resultado += 'Fecha: ' + v.fecha + '\n';
+                  resultado += 'Mueble: ' + v.mueble + '\n';
+                  resultado += 'Importe: ' + v.importe + '\n';
+                  facturacion += v.importe;
+                  resultado += '------------------------------------\n';
+              }
+          }
+          resultado += 'Facturación total: ' + facturacion + '\n';
+      } else if (searchObj.mes && searchObj.anio) {
+          resultado += 'REGISTRO DE LAS VENTAS REALIZADAS EN EL MES ' + searchObj.mes + '/' + searchObj.anio + ':\n';
+          const ventas: Venta[] = this.db.ventas;
+          for (const v of ventas) {
+              const fechaVenta: Date = new Date(v.fecha);
+              if (fechaVenta.getMonth() + 1 === searchObj.mes && 
+                  fechaVenta.getFullYear() === searchObj.anio) {
+                  resultado += 'ID de la venta: ' + v.id + '\n';
+                  resultado += 'Fecha: ' + v.fecha + '\n';
+                  resultado += 'Mueble: ' + v.mueble + '\n';
+                  resultado += 'Importe: ' + v.importe + '\n';
+                  facturacion += v.importe;
+                  resultado += '------------------------------------\n';
+              }
+          }
+          resultado += 'Facturación total: ' + facturacion + '\n';
+      } else if (searchObj.anio) {
+          resultado += 'REGISTRO DE LAS VENTAS REALIZADAS EN EL AÑO ' + searchObj.anio + ':\n';
+          const ventas: Venta[] = this.db.ventas;
+          for (const v of ventas) {
+              const fechaVenta: Date = new Date(v.fecha);
+              if (fechaVenta.getFullYear() === searchObj.anio) {
+                  resultado += 'ID de la venta: ' + v.id + '\n';
+                  resultado += 'Fecha: ' + v.fecha + '\n';
+                  resultado += 'Mueble: ' + v.mueble + '\n';
+                  resultado += 'Importe: ' + v.importe + '\n';
+                  facturacion += v.importe;
+                  resultado += '------------------------------------\n';
+              }
+          }
+          resultado += 'Facturación total: ' + facturacion + '\n';
+      }
+      return resultado;
+    }
+    ```
+
+# 4. 💡 Conclusiones 💡
+
+  Durante esta práctica, se ha aplicado un enfoque orientado a objetos siguiendo los principios SOLID. Mediante el uso de herramientas como Inquirer.js y Lowdb, se ha desarrollado una interfaz de línea de comandos interactiva para gestionar una tienda de muebles. Se han creado clases y estructuras de datos que permiten el manejo eficiente del stock, registro de transacciones y generación de informes, cumpliendo con los requisitos establecidos y garantizando la calidad y robustez del sistema.
+
+# 5. 📘 Infografía y Webgrafía 📘
+
+  A lo largo de la realización de la práctica, se han consultado diversos recursos para comprender mejor los conceptos planteados. A continuación, se detallan algunos de los enlaces visitados:
+
+  - Documentación sobre principios [SOLID](<https://jfbarrios.com/principios-solid-en-javascript>).
+  - Documentación sobre [Inquirer.js](<https://www.npmjs.com/package/inquirer>).
+  - Documentación dobre [Lowdb](<https://www.npmjs.com/package/lowdb>).
