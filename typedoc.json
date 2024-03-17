@@ -1,6 +1,6 @@
 {
   "entryPoints": [
-    "./src/proyecto/*/*.ts",
+    "./src/proyecto/**/*.ts",
   ],
   "out": "docs"
 }
