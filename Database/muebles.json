@@ -1,6 +1,21 @@
 {
   "sillas": [
     {
+      "id": 1001,
+      "nombre": "Silla de madera",
+      "tipo": "Silla",
+      "descripcion": "Silla de madera con respaldo y reposabrazos",
+      "material": "Madera",
+      "dimensiones": {
+        "alto": 80,
+        "ancho": 40,
+        "largo": 40
+      },
+      "precio": 50,
+      "respaldo": true,
+      "reposabrazos": true
+    },
+    {
       "id": 1002,
       "nombre": "Silla de comedor",
       "tipo": "Silla",
@@ -306,7 +321,7 @@
     },
     {
       "id": 3006,
-      "nombre": "Armario nuevo",
+      "nombre": "Armario de metal",
       "tipo": "Armario",
       "descripcion": "Armario de metal con 2 puertas",
       "material": "Metal",
@@ -316,21 +331,6 @@
         "largo": 135
       },
       "precio": 250,
-      "cajones": false,
-      "puertas": 2
-    },
-    {
-      "id": 9999,
-      "nombre": "Armario prueba",
-      "descripcion": "Armario de metal con 2 puertas",
-      "material": "Metal",
-      "dimensiones": {
-        "alto": 180,
-        "ancho": 65,
-        "largo": 135
-      },
-      "precio": 250,
-      "tipo": "Armario",
       "cajones": false,
       "puertas": 2
     }

@@ -1,8 +1,14 @@
 {
   "proveedores": [
     {
+      "id": 1,
+      "nombre": "Muebles Rústicos S.A.",
+      "contacto": 555555555,
+      "direccion": "Calle de los Muebles 789"
+    },
+    {
       "id": 2,
-      "nombre": "Juanito",
+      "nombre": "Maderas del Sur",
       "contacto": 666666666,
       "direccion": "Carretera de la Madera 321"
     },
@@ -53,12 +59,6 @@
       "nombre": "Muebles Distribution",
       "contacto": 141414141,
       "direccion": "La Laguna"
-    },
-    {
-      "id": 11,
-      "nombre": "Lola",
-      "direccion": "Boulevard Norte 753",
-      "contacto": 258369147
     }
   ]
 }
