@@ -10,21 +10,19 @@
 
 import inquirer from 'inquirer';
 import * as ReadlineSync from 'readline-sync';
-import { sortStrategy } from '../../Interfaces/Interfaces.js';
-import { BaseDeDatos, Categoria } from '../../BaseDeDatos/BaseDeDatos.js';
-import { Mueble, Dimension } from '../Muebles/Mueble.js';
+import { BaseDeDatos, Categoria, returnStrat, estrategiaOrdenacion } from '../../BaseDeDatos/BaseDeDatos.js';
+import { Dimension } from '../Muebles/Mueble.js';
 import { Silla } from '../Muebles/Silla.js';
 import { Mesa } from '../Muebles/Mesa.js';
 import { Armario } from '../Muebles/Armario.js';
-import { OrdenarAlfabeticamente } from '../../BaseDeDatos/OrdenarAlfabeticamente.js';
-import { OrdenarPorPrecio } from '../../BaseDeDatos/OrdenarPorPrecio.js';
 import { OrdenarPorId } from '../../BaseDeDatos/OrdenarPorId.js';
 import { Stock } from '../Stock/Stock.js';
 import { Cliente } from '../Personas/Cliente.js';
 import { Proveedor } from '../Personas/Proveedor.js';
 import { Devolucion } from '../Transacciones/Devolucion.js';
 import { Venta } from '../Transacciones/Venta.js';
-import {writeFile} from 'fs'
+import { writeFile } from 'fs'
+
 const gestor: Stock = Stock.getStock();
 const bbdd: BaseDeDatos = new BaseDeDatos(gestor);
 
@@ -670,30 +668,8 @@ async function main() {
   }
 }
 
-export function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
-  let strat: sortStrategy<Mueble>;
-  switch (p) {
-    case estrategiaOrdenacion.ALFABETICAMENTE:
-      strat = new OrdenarAlfabeticamente();
-      break;
-    case estrategiaOrdenacion.PRECIO:
-      strat = new OrdenarPorPrecio();
-      break;
-    case estrategiaOrdenacion.ID:
-      strat = new OrdenarPorId();
-      break;
-    default:
-      strat = new OrdenarAlfabeticamente();
-      break;
-  }
-  return strat;
-}
 
-export enum estrategiaOrdenacion {
-  ALFABETICAMENTE,
-  PRECIO,
-  ID
-}
+
 /**
  * Llamada a la función principal que muestra el menú principal.
  */

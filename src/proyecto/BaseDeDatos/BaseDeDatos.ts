@@ -12,12 +12,14 @@ import { LowSync } from 'lowdb';
 import { JSONFileSyncPreset } from 'lowdb/node';
 import { Mueble } from '../Items/Muebles/Mueble.js';
 import { sortStrategy, Observable, Observer } from '../Interfaces/Interfaces.js';
-import { OrdenarPorId } from '../BaseDeDatos/OrdenarPorId.js';
 import { Cliente } from '../Items/Personas/Cliente.js';
 import { Proveedor } from '../Items/Personas/Proveedor.js';
 import { Venta } from '../Items/Transacciones/Venta.js';
 import { Devolucion } from '../Items/Transacciones/Devolucion.js';
 import { FormatoMueble, FormatoCliente, FormatoProveedor, FormatoTransaccion } from '../Interfaces/Types.js';
+import { OrdenarAlfabeticamente } from './OrdenarAlfabeticamente.js';
+import { OrdenarPorPrecio } from './OrdenarPorPrecio.js';
+import { OrdenarPorId } from './OrdenarPorId.js';
 
 
 /**
@@ -348,6 +350,7 @@ export class BaseDeDatos implements Observable {
     this.ventas_.push(venta);
     this.db_transacciones_.data.ventas.push(objectToPush as Venta);
     this.db_transacciones_.write();
+    this.notify();
   }
 
   /**
@@ -505,4 +508,30 @@ export class BaseDeDatos implements Observable {
   }
 }
 
+/**
+ */
+export function returnStrat(p: estrategiaOrdenacion): sortStrategy<Mueble> {
+  let strat: sortStrategy<Mueble>;
+  switch (p) {
+    case estrategiaOrdenacion.ALFABETICAMENTE:
+      strat = new OrdenarAlfabeticamente();
+      break;
+    case estrategiaOrdenacion.PRECIO:
+      strat = new OrdenarPorPrecio();
+      break;
+    case estrategiaOrdenacion.ID:
+      strat = new OrdenarPorId();
+      break;
+    default:
+      strat = new OrdenarAlfabeticamente();
+      break;
+  }
+  return strat;
+}
 
+
+export enum estrategiaOrdenacion {
+  ALFABETICAMENTE,
+  PRECIO,
+  ID
+}

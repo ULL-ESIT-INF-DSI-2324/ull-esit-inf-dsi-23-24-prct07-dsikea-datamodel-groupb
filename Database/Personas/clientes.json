@@ -1,14 +1,8 @@
 {
   "clientes": [
     {
-      "id": 1,
-      "nombre": "Juan Perez",
-      "contacto": 123456789,
-      "direccion": "Calle Principal 123"
-    },
-    {
       "id": 2,
-      "nombre": "María López",
+      "nombre": "Juanito",
       "contacto": 987654321,
       "direccion": "Avenida Central 456"
     },
@@ -59,6 +53,12 @@
       "nombre": "Marta Díaz",
       "contacto": 258369147,
       "direccion": "Calle Principal 753"
+    },
+    {
+      "id": 11,
+      "nombre": "Lola Lolita",
+      "direccion": "Boulevard Norte 753",
+      "contacto": 258369147
     }
   ]
 }

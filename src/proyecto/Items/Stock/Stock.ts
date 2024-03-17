@@ -14,7 +14,7 @@ import { Observer } from '../../Interfaces/Interfaces.js'
 import { Venta } from '../Transacciones/Venta.js';
 import { Devolucion } from '../Transacciones/Devolucion.js';
 import { Mueble } from '../Muebles/Mueble.js';
-import { estrategiaOrdenacion, returnStrat } from '../../Items/Menu/Menu.js';
+import { estrategiaOrdenacion, returnStrat } from '../../BaseDeDatos/BaseDeDatos.js';
 import { Cliente } from '../../Items/Personas/Cliente.js';
 //import { get } from 'http';
 
@@ -31,6 +31,12 @@ export class Stock implements Observer {
    */
   private constructor() {}
   
+  /**
+   * This method return the database
+   */
+  get database(): BaseDeDatos {
+    return this.db;
+  }
   /**
    * Método que comprueba si existe una instancia de Stock
    * @returns Stock
@@ -296,5 +302,13 @@ export class Stock implements Observer {
         resultado += 'Facturación total: ' + facturacion + '\n';
     }
     return resultado;
+}
+
+/**
+ * Función para devolver el stock
+ * @returns Map<string, Map<string, number>>
+ */
+public returnStock() : Map<string, Map<string, number>>{
+  return this.actualStock;
 }
 }
