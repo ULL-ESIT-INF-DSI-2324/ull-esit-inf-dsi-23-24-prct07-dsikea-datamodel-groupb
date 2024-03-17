@@ -673,4 +673,4 @@ async function main() {
 /**
  * Llamada a la función principal que muestra el menú principal.
  */
-// main();
+main();
